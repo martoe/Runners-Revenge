@@ -1,0 +1,7 @@
+[26.10.2010] Project setup
+[] Read single track from XML
+[] Display track (e.g. create image, use AWT,...)
+[] Integrate with e.g. Google maps
+[] Display track with Eclipse/RCP
+[] Read all track data from XML, define datamodel
+

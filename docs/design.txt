@@ -1,0 +1,3 @@
+TestNG (JUnit-Funktionsumfang ist sehr begrenzt, spez. Annotations)
+Maven (keine Lust mit Cradle zu experimentieren)
+XOM (das nächstbeste..., die letzte Stable von dom4j ist aus 2005)
