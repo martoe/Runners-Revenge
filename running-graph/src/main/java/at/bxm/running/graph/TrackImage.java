@@ -34,19 +34,19 @@ public class TrackImage {
 		double lonMin = Double.MAX_VALUE;
 		double lonMax = Double.MIN_VALUE;
 		for (TrackPoint point : data.getPoints()) {
-			if (point.getLat() != null && point.getLon() != null) {
+			if (point.getLatitude() != null && point.getLongitude() != null) {
 				track.add(point);
-				if (point.getLat() > latMax) {
-					latMax = point.getLat();
+				if (point.getLatitude() > latMax) {
+					latMax = point.getLatitude();
 				}
-				if (point.getLat() < latMin) {
-					latMin = point.getLat();
+				if (point.getLatitude() < latMin) {
+					latMin = point.getLatitude();
 				}
-				if (point.getLon() > lonMax) {
-					lonMax = point.getLon();
+				if (point.getLongitude() > lonMax) {
+					lonMax = point.getLongitude();
 				}
-				if (point.getLon() < lonMin) {
-					lonMin = point.getLon();
+				if (point.getLongitude() < lonMin) {
+					lonMin = point.getLongitude();
 				}
 			}
 		}
@@ -61,22 +61,23 @@ public class TrackImage {
 						.getDefaultScreenDevice().getDefaultConfiguration();
 		BufferedImage image = gfxConf.createCompatibleImage(width, height);
 		Graphics gr = image.getGraphics();
-		TrackPoint lastPoint = null;
+		int lastPointX = -1;
+		int lastPointY = -1;
+		// factor to normalize a position (i.e. the longitude and latitude is in iterval [0,1]):
+		double factor = Math.max(longitudeMax - longitudeMin, latitudeMax - latitudeMin);
 		for (TrackPoint thisPoint : track) {
-			if (lastPoint != null) {
-				double x1 = (thisPoint.getLon() - longitudeMin) / (longitudeMax - longitudeMin);
-				double y1 = (thisPoint.getLat() - latitudeMin) / (latitudeMax - latitudeMin);
-				double x2 = (lastPoint.getLon() - longitudeMin) / (longitudeMax - longitudeMin);
-				double y2 = (lastPoint.getLat() - latitudeMin) / (latitudeMax - latitudeMin);
-				gr.drawLine((int) Math.round(x1 * width), (int) Math.round(y1 * height),
-								(int) Math.round(x2 * width), (int) Math.round(y2 * height));
+			int thisPointX = (int)Math.round((thisPoint.getLongitude() - longitudeMin) / factor * width);
+			int thisPointY = height
+							- (int)Math.round((thisPoint.getLatitude() - latitudeMin) / factor * height);
+			if (lastPointX >= 0) { // TODO optimize calculation
+				gr.drawLine(lastPointX, lastPointY, thisPointX, thisPointY);
 			}
-			lastPoint = thisPoint;
+			lastPointX = thisPointX;
+			lastPointY = thisPointY;
 		}
 		File target = new File(filename);
 		logger.debug("Writing " + imageType + " image to " + target.getAbsolutePath());
 		ImageIO.write(image, imageType, target);
-
 	}
 
 }

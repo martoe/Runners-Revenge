@@ -9,10 +9,10 @@ public class TrackPoint extends FitlogNode {
 	private double tm;
 	/** <xs:attribute name="lat" type="xs:decimal" use="optional"/> */
 	@XmlAttribute(name = "lat")
-	private Double lat;
+	private Double latitude;
 	/** <xs:attribute name="lon" type="xs:decimal" use="optional"/> */
 	@XmlAttribute(name = "lon")
-	private Double lon;
+	private Double longitude;
 	/** <xs:attribute name="ele" type="xs:decimal" use="optional"/> */
 	@XmlAttribute(name = "ele")
 	private Double ele;
@@ -28,12 +28,12 @@ public class TrackPoint extends FitlogNode {
 		return tm;
 	}
 
-	public Double getLat() {
-		return lat;
+	public Double getLatitude() {
+		return latitude;
 	}
 
-	public Double getLon() {
-		return lon;
+	public Double getLongitude() {
+		return longitude;
 	}
 
 	public Double getEle() {

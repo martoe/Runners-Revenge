@@ -22,11 +22,24 @@ public class TrackImageTest {
 			FitnessWorkbook fitlog = new XmlDecoder().parseLogbook(in);
 			TrackImage track = new TrackImage(fitlog.getAthleteLogs().get(0).getActivities().get(0)
 							.getTrack());
-			track.write(500, 500, "png", "image.png");
+			track.write(500, 500, "png", "target/test-output/image.png");
 		} finally {
 			in.close();
 		}
 	}
+
+	// public void drawLogbook2() throws Exception {
+	// BufferedReader in = null;
+	// try {
+	// in = read("bigsample.fitlog");
+	// FitnessWorkbook fitlog = new XmlDecoder().parseLogbook(in);
+	// List<Activity> activities = fitlog.getAthleteLogs().get(0).getActivities();
+	// TrackImage track = new TrackImage(activities.get(51).getTrack());
+	// track.write(500, 500, "png", "target/test-output/voesendorf.png");
+	// } finally {
+	// in.close();
+	// }
+	// }
 
 	private BufferedReader read(String resource) {
 		return new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader()

@@ -54,7 +54,7 @@ public class JaxbTest {
 		assertEquals(track.getPoints().size(), 126);
 		for (TrackPoint point : track.getPoints()) {
 			assertNotNull(point.getTm());
-			assertTrue(point.getLat() != null && point.getLon() != null || point.getHr() != null);
+			assertTrue(point.getLatitude() != null && point.getLongitude() != null || point.getHr() != null);
 		}
 	}
 
