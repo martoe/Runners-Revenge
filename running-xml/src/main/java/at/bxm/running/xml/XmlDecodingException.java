@@ -7,14 +7,26 @@ public class XmlDecodingException extends Exception {
 	private final int line;
 	private final int column;
 
+	public XmlDecodingException(String message) {
+		this(message, null);
+	}
+
+	public XmlDecodingException(Throwable cause) {
+		this(cause.getMessage(), cause);
+	}
+
+	public XmlDecodingException(String message, Throwable cause) {
+		super(message, cause);
+		line = 0;
+		column = 0;
+	}
+
 	public XmlDecodingException(int line, int column, String message) {
 		this(line, column, message, null);
 	}
 
-	public XmlDecodingException(int line, int column, String message,
-			Throwable cause) {
-		super("Error at line " + line + ", column " + column + ": " + message,
-				cause);
+	public XmlDecodingException(int line, int column, String message, Throwable cause) {
+		super("Error at line " + line + ", column " + column + ": " + message, cause);
 		this.line = line;
 		this.column = column;
 	}

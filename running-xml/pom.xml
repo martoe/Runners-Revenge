@@ -11,9 +11,8 @@
   <name>running-xml</name>
   <dependencies>
   	<dependency>
-  		<groupId>xom</groupId>
-  		<artifactId>xom</artifactId>
-  		<version>1.2.5</version>
+  		<groupId>commons-lang</groupId>
+  		<artifactId>commons-lang</artifactId>
   	</dependency>
   </dependencies>
 </project>
