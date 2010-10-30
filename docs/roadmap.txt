@@ -1,5 +1,5 @@
-[26.10.2010] Project setup
-[] Read single track from XML
+[2010-10-26] Project setup
+[2010-10-30] Read single track from XML
 [] Display track (e.g. create image, use AWT,...)
 [] Integrate with e.g. Google maps
 [] Display track with Eclipse/RCP
