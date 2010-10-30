@@ -33,6 +33,11 @@
 	  		<artifactId>commons-lang</artifactId>
 	  		<version>2.5</version>
 	  	</dependency>
+	  	<dependency>
+		    <groupId>at.bxm.running</groupId>
+			<artifactId>running-xml</artifactId>
+	  		<version>${project.version}</version>
+	  	</dependency>
   	</dependencies>
   </dependencyManagement>
   <dependencies>
@@ -52,5 +57,6 @@
   <modules>
     <module>running-persistence</module>
     <module>running-xml</module>
+    <module>running-graph</module>
   </modules>
 </project>
