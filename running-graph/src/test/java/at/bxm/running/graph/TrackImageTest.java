@@ -1,4 +1,4 @@
-package at.bxm.running;
+package at.bxm.running.graph;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

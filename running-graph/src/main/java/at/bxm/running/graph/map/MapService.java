@@ -56,8 +56,7 @@ public class MapService {
 		} finally {
 			try {
 				in.close();
-			} catch (Exception ignore) {
-			}
+			} catch (Exception ignore) {}
 		}
 	}
 
@@ -71,15 +70,14 @@ public class MapService {
 		} finally {
 			try {
 				out.close();
-			} catch (Exception ignore) {
-			}
+			} catch (Exception ignore) {}
 		}
 	}
 
 	// TODO better use a local var
 	private File getCacheDir() throws IOException {
 		File cacheDir = new File("cache/" + mapProvider.getClass().getName());
-		System.err.println(cacheDir.mkdirs()); // FIXME
+		cacheDir.mkdirs();
 		if (!cacheDir.exists()) {
 			throw new IOException("Cache directory doesn't exist: " + cacheDir.getAbsolutePath());
 		}

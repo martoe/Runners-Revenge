@@ -25,14 +25,13 @@ public class DefaultMapLayout<T extends MapTile> implements MapLayout<T> {
 	}
 
 	public void addTile(int row, int column, T value) {
-		List<T> tileRow = null;
-		if (tiles.size() > row) {
-			tileRow = tiles.get(row);
-		}
+		for (int i = tiles.size(); i <= row; tiles.add(null), i++);
+		List<T> tileRow = tiles.get(row);
 		if (tileRow == null) {
 			tileRow = new ArrayList<T>();
 			tiles.set(row, tileRow);
 		}
+		for (int i = tileRow.size(); i <= column; tileRow.add(null), i++);
 		tileRow.set(column, value);
 		tileRows = Math.max(tileRows, tiles.size());
 		tileColumns = Math.max(tileColumns, tileRow.size());
