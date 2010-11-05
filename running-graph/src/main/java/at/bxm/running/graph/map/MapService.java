@@ -30,7 +30,7 @@ public class MapService {
 				MapTile tile = layout.getTile(row, col);
 				byte[] image = readFromCache(tile);
 				if (image == null) {
-					image = tile.loadImage();
+					image = tile.getImage();
 					writeToCache(tile, image);
 				}
 			}
@@ -60,6 +60,7 @@ public class MapService {
 		}
 	}
 
+	// FIXME remove cahcing to CachedMapTile
 	private void writeToCache(MapTile tile, byte[] image) throws IOException {
 		File target = new File(getCacheDir(), tile.getUniqueFilename());
 		logger.debug("Writing " + image.length + " bytes to " + target.getAbsolutePath());

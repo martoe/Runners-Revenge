@@ -31,7 +31,7 @@ public class GoogleMapProvider implements MapProvider {
 		return layout;
 	}
 
-	private static class GoogleMapTile extends AbstractMapTile {
+	private static class GoogleMapTile extends CachedMapTile {
 		private final Log logger = LogFactory.getLog(getClass());
 		/** range 6-18 */
 		private final int zoom;
