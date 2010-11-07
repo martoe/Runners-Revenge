@@ -1,11 +1,12 @@
 package at.bxm.running.graph.map;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 public interface MapTile {
 
-	String getUniqueFilename();
-
 	byte[] getImage() throws IOException;
+
+	InputStream getImageStream() throws IOException;
 
 }

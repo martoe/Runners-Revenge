@@ -7,6 +7,10 @@ public interface MapLayout<T extends MapTile> {
 
 	int getTileColumns();
 
+	int getTileWidth();
+
+	int getTileHeight();
+
 	T getTile(int row, int column);
 
 }

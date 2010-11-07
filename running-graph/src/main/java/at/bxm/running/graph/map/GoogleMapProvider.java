@@ -22,7 +22,7 @@ public class GoogleMapProvider implements MapProvider {
 		// lat 0 = äquator, 90 = nordpol, -90 = südpol
 		// zoomlevel z: einteilung in 2^z * 2^z images
 		// bsp zoomlevel 17: 131000*131000 images, lon/lat 0/0 bei 65500/65500
-		DefaultMapLayout<GoogleMapTile> layout = new DefaultMapLayout<GoogleMapTile>();
+		DefaultMapLayout<GoogleMapTile> layout = new DefaultMapLayout<GoogleMapTile>(256, 256);
 		for (int x = (int)longitudeMin, i = 0; x <= longitudeMax; x++, i++) {
 			for (int y = (int)latitudeMin, j = 0; y <= latitiudeMax; y++, j++) {
 				layout.addTile(i, j, new GoogleMapTile((int)resolution, x, y));
@@ -39,7 +39,6 @@ public class GoogleMapProvider implements MapProvider {
 		private final int y;
 
 		public GoogleMapTile(int zoom, int x, int y) {
-			super("z" + zoom + "x" + x + "y" + y + ".jpg");
 			this.zoom = Math.min(Math.max(zoom, 6), 18);
 			this.x = x;
 			this.y = y;
@@ -64,6 +63,12 @@ public class GoogleMapProvider implements MapProvider {
 			response.getEntity().consumeContent();
 			return out.toByteArray();
 		}
+
+		@Override
+		protected String getCacheFile() {
+			return "z" + zoom + "x" + x + "y" + y + ".jpg";
+		}
+
 	}
 
 }

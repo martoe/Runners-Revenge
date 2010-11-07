@@ -6,8 +6,26 @@ import java.util.List;
 public class DefaultMapLayout<T extends MapTile> implements MapLayout<T> {
 
 	private final List<List<T>> tiles = new ArrayList<List<T>>();
+	private final int tileWidth;
+	private final int tileHeight;
 	private int tileRows;
 	private int tileColumns;
+
+	public DefaultMapLayout(int tileWidth, int tileHeight) {
+		this.tileWidth = tileWidth;
+		this.tileHeight = tileHeight;
+
+	}
+
+	@Override
+	public int getTileWidth() {
+		return tileWidth;
+	}
+
+	@Override
+	public int getTileHeight() {
+		return tileHeight;
+	}
 
 	@Override
 	public int getTileRows() {
