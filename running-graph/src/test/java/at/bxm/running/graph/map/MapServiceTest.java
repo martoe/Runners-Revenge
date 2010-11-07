@@ -32,34 +32,40 @@ public class MapServiceTest {
 
 	public void createHomeImage() throws IOException {
 		MapProvider mp = new GoogleMapProvider();
-		MapLayout<?> layout = mp.getLayout(71490, 45481, 71492, 45483, 17);
+		for (int i = 6; i < 11; i++) {
+			MapLayout<?> layout = mp.getLayout(16.3582229614258, 48.147533416748, 16.3582229614258,
+							48.147533416748, i);
 
-		GraphicsConfiguration gfxConf = GraphicsEnvironment.getLocalGraphicsEnvironment()
-						.getDefaultScreenDevice().getDefaultConfiguration();
-		BufferedImage image = gfxConf.createCompatibleImage(
-						layout.getTileWidth() * layout.getTileColumns(),
-						layout.getTileHeight() * layout.getTileRows());
-		Graphics gr = image.getGraphics();
+			GraphicsConfiguration gfxConf = GraphicsEnvironment.getLocalGraphicsEnvironment()
+							.getDefaultScreenDevice().getDefaultConfiguration();
+			BufferedImage image = gfxConf.createCompatibleImage(
+							layout.getTileWidth() * layout.getTileColumns(),
+							layout.getTileHeight() * layout.getTileRows());
+			Graphics gr = image.getGraphics();
 
-		int x = 0;
-		for (int row = 0; row < layout.getTileRows(); row++) {
-			int y = 0;
-			int height = 0;
-			for (int col = 0; col < layout.getTileColumns(); col++) {
-				MapTile tile = layout.getTile(row, col);
-				InputStream in = tile.getImageStream();
-				BufferedImage img = ImageIO.read(in);
-				if (logger.isTraceEnabled()) {
-					logger.trace("Placing image " + row + "/" + col + " at " + x + "/" + y);
+			int x = 0;
+			for (int row = 0; row < layout.getTileRows(); row++) {
+				int y = 0;
+				int height = 0;
+				for (int col = 0; col < layout.getTileColumns(); col++) {
+					MapTile tile = layout.getTile(row, col);
+					InputStream in = tile.getImageStream();
+					BufferedImage img = ImageIO.read(in);
+					if (img != null) {
+						if (logger.isTraceEnabled()) {
+							logger.trace("Placing image " + row + "/" + col + " at " + x + "/" + y);
+						}
+						gr.drawImage(img, x, y, null);
+						y += img.getWidth();
+						height = img.getHeight();
+					}
 				}
-				gr.drawImage(img, x, y, null);
-				y += img.getWidth();
-				height = img.getHeight();
+				x += height;
 			}
-			x += height;
+			File target = new File("home" + i + ".png");
+			logger.debug("Writing image to " + target.getAbsolutePath());
+			ImageIO.write(image, "png", target);
 		}
-		File target = new File("home.png");
-		logger.debug("Writing image to " + target.getAbsolutePath());
-		ImageIO.write(image, "png", target);
 	}
+
 }
