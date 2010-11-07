@@ -17,22 +17,10 @@ public class MapServiceTest {
 
 	private final Log logger = LogFactory.getLog(getClass());
 
-	public void downloadInzersdorf() throws Exception {
-		MapProvider mp = new GoogleMapProvider();
-		MapService mapService = new MapService();
-		mapService.setMapProvider(mp);
-		int x = 71492;
-		int y = 45483;
-		for (int z = 17; z >= 16; z--) {
-			mapService.loadImages(x, y, x + 1, y + 1, z);
-			x = x / 2;
-			y = y / 2;
-		}
-	}
-
 	public void createHomeImage() throws IOException {
+		// download my home at various zoom levels
 		MapProvider mp = new GoogleMapProvider();
-		for (int i = 6; i < 11; i++) {
+		for (int i = 6; i < 19; i++) {
 			MapLayout<?> layout = mp.getLayout(16.3582229614258, 48.147533416748, 16.3582229614258,
 							48.147533416748, i);
 
