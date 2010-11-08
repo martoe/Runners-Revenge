@@ -6,15 +6,42 @@ import java.util.List;
 public class DefaultMapLayout<T extends MapTile> implements MapLayout<T> {
 
 	private final List<List<T>> tiles = new ArrayList<List<T>>();
+	private final double latNorth;
+	private final double latSouth;
+	private final double lonEast;
+	private final double lonWest;
 	private final int tileWidth;
 	private final int tileHeight;
 	private int tileRows;
 	private int tileColumns;
 
-	public DefaultMapLayout(int tileWidth, int tileHeight) {
+	public DefaultMapLayout(double latNorth, double latSouth, double lonEast, double lonWest,
+					int tileWidth, int tileHeight) {
+		this.latNorth = latNorth;
+		this.latSouth = latSouth;
+		this.lonEast = lonEast;
+		this.lonWest = lonWest;
 		this.tileWidth = tileWidth;
 		this.tileHeight = tileHeight;
+	}
 
+	@Override
+	public double getLatNorth() {
+		return latNorth;
+	}
+
+	@Override
+	public double getLatSouth() {
+		return latSouth;
+	}
+
+	@Override
+	public double getLonEast() {
+		return lonEast;
+	}
+
+	public double getLonWest() {
+		return lonWest;
 	}
 
 	@Override

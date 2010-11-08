@@ -4,25 +4,27 @@ import java.awt.Graphics;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.testng.annotations.Test;
+import at.bxm.running.graph.TestBase;
+import at.bxm.running.graph.TrackImage;
+import at.bxm.running.xml.FitnessWorkbook;
+import at.bxm.running.xml.XmlDecoder;
+import at.bxm.running.xml.XmlDecodingException;
 
 @Test
-public class MapServiceTest {
-
-	private final Log logger = LogFactory.getLog(getClass());
+public class MapServiceTest extends TestBase {
 
 	public void createHomeImage() throws IOException {
 		// download my home at various zoom levels
-		MapProvider mp = new GoogleMapProvider();
+		MapProvider mp = new GoogleMapsProvider();
 		for (int i = 6; i < 19; i++) {
-			MapLayout<?> layout = mp.getLayout(16.3582229614258, 48.147533416748, 16.3582229614258,
-							48.147533416748, i);
+			MapLayout<?> layout = mp.getLayout(48.147533416748, 48.147533416748, 16.3582229614258,
+							16.3582229614258, i);
 
 			GraphicsConfiguration gfxConf = GraphicsEnvironment.getLocalGraphicsEnvironment()
 							.getDefaultScreenDevice().getDefaultConfiguration();
@@ -50,9 +52,30 @@ public class MapServiceTest {
 				}
 				x += height;
 			}
-			File target = new File("home" + i + ".png");
-			logger.debug("Writing image to " + target.getAbsolutePath());
+			File target = getTestfile("home" + i + ".png");
 			ImageIO.write(image, "png", target);
+		}
+	}
+
+	// FIXME unabhängig vom zoomfaktor: track um ca. 20-30px zu weit unten
+	// FIXME fehler bei zoom 17, 18
+	public void createTrackImage() throws IOException, XmlDecodingException {
+		BufferedReader in = null;
+		try {
+			in = read("sample.fitlog");
+			FitnessWorkbook fitlog = new XmlDecoder().parseLogbook(in);
+			TrackImage track = new TrackImage(fitlog.getAthleteLogs().get(0).getActivities().get(0)
+							.getTrack());
+			MapProvider mp = new GoogleMapsProvider();
+			MapService mapService = new MapService();
+			mapService.setMapProvider(mp);
+			for (int i = 6; i < 19; i++) {
+				BufferedImage image = mapService.createImage(track, i);
+				File target = getTestfile("track" + i + ".png");
+				ImageIO.write(image, "png", target);
+			}
+		} finally {
+			in.close();
 		}
 	}
 

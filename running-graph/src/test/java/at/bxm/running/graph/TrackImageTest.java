@@ -1,19 +1,30 @@
 package at.bxm.running.graph;
 
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsEnvironment;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import org.testng.annotations.Test;
-import at.bxm.running.graph.TrackImage;
 import at.bxm.running.xml.FitnessWorkbook;
 import at.bxm.running.xml.XmlDecoder;
 
 // TODO base class for all tests ("test-utility" project?)
 @Test
-public class TrackImageTest {
+public class TrackImageTest extends TestBase {
 
-	private final Log logger = LogFactory.getLog(getClass());
+	private void write(TrackImage data, int width, int height, String imageType, String filename)
+					throws IOException {
+		GraphicsConfiguration gfxConf = GraphicsEnvironment.getLocalGraphicsEnvironment()
+						.getDefaultScreenDevice().getDefaultConfiguration();
+		BufferedImage image = gfxConf.createCompatibleImage(width, height);
+		data.draw(image, data.getLatitudeMax(), data.getLatitudeMin(), data.getLongitudeMax(),
+						data.getLongitudeMin());
+		File target = getTestfile(filename);
+		ImageIO.write(image, imageType, target);
+	}
 
 	public void drawLogbook() throws Exception {
 		BufferedReader in = null;
@@ -22,7 +33,7 @@ public class TrackImageTest {
 			FitnessWorkbook fitlog = new XmlDecoder().parseLogbook(in);
 			TrackImage track = new TrackImage(fitlog.getAthleteLogs().get(0).getActivities().get(0)
 							.getTrack());
-			track.write(500, 500, "png", "target/test-output/image.png");
+			write(track, 500, 500, "png", "image.png");
 		} finally {
 			in.close();
 		}
@@ -40,10 +51,5 @@ public class TrackImageTest {
 	// in.close();
 	// }
 	// }
-
-	private BufferedReader read(String resource) {
-		return new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader()
-						.getResourceAsStream(resource)));
-	}
 
 }
