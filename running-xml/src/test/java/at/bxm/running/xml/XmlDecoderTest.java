@@ -2,7 +2,6 @@ package at.bxm.running.xml;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
 import org.testng.annotations.Test;
 
 @Test
@@ -15,8 +14,8 @@ public class XmlDecoderTest {
 	}
 
 	private BufferedReader read(String resource) {
-		return new BufferedReader(new InputStreamReader(Thread.currentThread()
-				.getContextClassLoader().getResourceAsStream(resource)));
+		return new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader()
+						.getResourceAsStream(resource)));
 	}
 
 }

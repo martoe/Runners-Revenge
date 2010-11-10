@@ -26,9 +26,9 @@ public class GoogleMapsProvider implements MapProvider {
 		DefaultMapLayout<GoogleMapTile> layout = new DefaultMapLayout<GoogleMapTile>(toLatitude(yMin,
 						zoomlevel), toLatitude(yMax + 1, zoomlevel), toLongitude(xMax + 1, zoomlevel),
 						toLongitude(xMin, zoomlevel), 256, 256);
-		for (int x = xMin, i = 0; x <= xMax; x++, i++) {
-			for (int y = yMin, j = 0; y <= yMax; y++, j++) {
-				layout.addTile(i, j, new GoogleMapTile(zoomlevel, x, y));
+		for (int x = xMin, col = 0; x <= xMax; x++, col++) {
+			for (int y = yMin, row = 0; y <= yMax; y++, row++) {
+				layout.addTile(row, col, new GoogleMapTile(zoomlevel, x, y));
 			}
 		}
 		return layout;
@@ -49,7 +49,8 @@ public class GoogleMapsProvider implements MapProvider {
 
 		@Override
 		public byte[] loadImage() throws IOException {
-			// FIXME do this right
+			// FIXME do this right (check HTTP response code, reuse client, ev. parallel downloads, ev.
+			// timeouts)
 			HttpClient httpclient = new DefaultHttpClient();
 			int serverNo = (int)Math.floor(Math.random() * 4);
 			HttpGet req = new HttpGet("http://khm" + serverNo + ".google.com/kh/v=45&hl=en&x=" + x

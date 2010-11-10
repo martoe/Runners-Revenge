@@ -1,5 +1,6 @@
 package at.bxm.running.graph;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.SortedSet;
@@ -57,18 +58,20 @@ public class TrackImage {
 	 */
 	public void draw(BufferedImage image, double latNorth, double latSouth, double lonEast,
 					double lonWest) {
-		int width = image.getWidth();
-		int height = image.getHeight();
 		Graphics gr = image.getGraphics();
+		gr.setColor(Color.BLUE);
+
+		// multiply each longitude with this value to place it on the image:
+		double scaleFactorX = image.getWidth() / (lonEast - lonWest);
+		// multiply each latitude with this value to place it on the image:
+		double scaleFactorY = image.getHeight() / (latNorth - latSouth);
+
 		int lastPointX = -1;
 		int lastPointY = -1;
-		// factor to normalize a position (i.e. the longitude and latitude is in iterval [0,1]):
-		double factor = Math.max(lonEast - lonWest, latNorth - latSouth);
 		for (TrackPoint thisPoint : track) {
-			int thisPointX = (int)Math.round((thisPoint.getLongitude() - lonWest) / factor * width);
-			int thisPointY = height
-							- (int)Math.round((thisPoint.getLatitude() - latSouth) / factor * height);
-			if (lastPointX >= 0) { // TODO optimize calculation
+			int thisPointX = (int)Math.round((thisPoint.getLongitude() - lonWest) * scaleFactorX);
+			int thisPointY = (int)Math.round((latNorth - thisPoint.getLatitude()) * scaleFactorY);
+			if (lastPointX >= 0) {
 				gr.drawLine(lastPointX, lastPointY, thisPointX, thisPointY);
 			}
 			lastPointX = thisPointX;

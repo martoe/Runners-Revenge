@@ -4,14 +4,10 @@ import static org.testng.Assert.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.testng.annotations.Test;
 
 @Test
 public class JaxbTest {
-
-	private final Log logger = LogFactory.getLog(getClass());
 
 	public void parseSmallLogbook() throws Exception {
 		FitnessWorkbook fitlog = parse("sample.fitlog");
@@ -54,7 +50,8 @@ public class JaxbTest {
 		assertEquals(track.getPoints().size(), 126);
 		for (TrackPoint point : track.getPoints()) {
 			assertNotNull(point.getTm());
-			assertTrue(point.getLatitude() != null && point.getLongitude() != null || point.getHr() != null);
+			assertTrue(point.getLatitude() != null && point.getLongitude() != null
+							|| point.getHr() != null);
 		}
 	}
 

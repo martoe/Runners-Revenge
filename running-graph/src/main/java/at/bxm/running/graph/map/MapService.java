@@ -26,15 +26,16 @@ public class MapService {
 						data.getLongitudeMax(), data.getLongitudeMin(), resolution);
 		GraphicsConfiguration gfxConf = GraphicsEnvironment.getLocalGraphicsEnvironment()
 						.getDefaultScreenDevice().getDefaultConfiguration();
-		BufferedImage image = gfxConf.createCompatibleImage(
-						layout.getTileWidth() * layout.getTileColumns(),
-						layout.getTileHeight() * layout.getTileRows());
+		int width = layout.getTileWidth() * layout.getTileColumns();
+		int height = layout.getTileHeight() * layout.getTileRows();
+		logger.debug("Creating " + width + "*" + height + " image for " + layout);
+		BufferedImage image = gfxConf.createCompatibleImage(width, height);
 		Graphics gr = image.getGraphics();
 
-		int x = 0;
+		int y = 0;
 		for (int row = 0; row < layout.getTileRows(); row++) {
-			int y = 0;
-			int height = 0;
+			int x = 0;
+			int colHeight = 0;
 			for (int col = 0; col < layout.getTileColumns(); col++) {
 				MapTile tile = layout.getTile(row, col);
 				InputStream in = tile.getImageStream();
@@ -44,11 +45,11 @@ public class MapService {
 						logger.trace("Placing image " + row + "/" + col + " at " + x + "/" + y);
 					}
 					gr.drawImage(img, x, y, null);
-					y += img.getWidth();
-					height = img.getHeight();
+					x += img.getWidth();
+					colHeight = img.getHeight();
 				}
 			}
-			x += height;
+			y += colHeight;
 		}
 		data.draw(image, layout.getLatNorth(), layout.getLatSouth(), layout.getLonEast(),
 						layout.getLonWest());

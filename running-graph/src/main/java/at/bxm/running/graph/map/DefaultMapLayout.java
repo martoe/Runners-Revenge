@@ -2,6 +2,7 @@ package at.bxm.running.graph.map;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class DefaultMapLayout<T extends MapTile> implements MapLayout<T> {
 
@@ -40,6 +41,7 @@ public class DefaultMapLayout<T extends MapTile> implements MapLayout<T> {
 		return lonEast;
 	}
 
+	@Override
 	public double getLonWest() {
 		return lonWest;
 	}
@@ -80,6 +82,11 @@ public class DefaultMapLayout<T extends MapTile> implements MapLayout<T> {
 		tileRow.set(column, value);
 		tileRows = Math.max(tileRows, tiles.size());
 		tileColumns = Math.max(tileColumns, tileRow.size());
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
 	}
 
 }

@@ -1,3 +1,19 @@
-TestNG (JUnit-Funktionsumfang ist sehr begrenzt, spez. Annotations)
-Maven (keine Lust mit Cradle zu experimentieren)
-JAXB (besser geeignet als Betwixt, weil das XML-Format feststeht)
+Unittests: TestNG
+	+ bessere Annotationen (z.B. @Test auf Klassenebene, Dataprovider) als JUnit
+	+ praktischere Signatur der assert-Methoden als JUnit
+	- schlechtes Eclipse-Plugin
+
+Build: Maven
+	+ Know-how, gute Erfahrungen
+	+ einheitliche Build-Struktur
+	ev. später einmal Cradle evaluieren
+
+XML-Parsing: JAXB
+	+ einfach
+	+ Teil von JavaSE 6
+	+ besser geeignet als Betwixt, weil das XML-Format vorgegeben ist
+
+Logging: SLF4J, Log4J
+	+ bessere Modularisierung als Commons-Logging (enthält nur jenen Logger, der tatsächlich verwendet wird)
+	+ Log4J Konw-how
+	ev. Logback evaluieren

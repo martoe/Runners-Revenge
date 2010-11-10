@@ -6,13 +6,13 @@ import java.util.Arrays;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class XmlDecoder {
 
 	private static final char[] XML_PREFIX = new char[] { 239, 187, 191 };
-	private final Log logger = LogFactory.getLog(getClass());
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	public void readPrefix(BufferedReader in) throws IOException, XmlDecodingException {
 		char[] prefix = new char[3];
@@ -30,7 +30,7 @@ public class XmlDecoder {
 			readPrefix(in);
 			JAXBContext jc = JAXBContext.newInstance(FitnessWorkbook.class);
 			Unmarshaller u = jc.createUnmarshaller();
-			return (FitnessWorkbook) u.unmarshal(in);
+			return (FitnessWorkbook)u.unmarshal(in);
 			// return JAXB.unmarshal(in, FitnessWorkbook.class);
 		} catch (JAXBException e) {
 			throw new XmlDecodingException(e);

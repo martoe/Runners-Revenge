@@ -1,8 +1,8 @@
 package at.bxm.running.graph.map;
 
 import static org.testng.Assert.*;
-import org.testng.annotations.Test;
 import at.bxm.running.graph.TestBase;
+import org.testng.annotations.Test;
 
 @Test
 public class GoogleMapsConverterTest extends TestBase {
@@ -17,6 +17,7 @@ public class GoogleMapsConverterTest extends TestBase {
 		assertEquals(GoogleMapsConverter.toX(16.3582229614258, 17), 71491);
 	}
 
+	@Test
 	public void toY() throws Exception {
 		assertEquals(GoogleMapsConverter.toY(48.147533416748, 1), 0);
 		assertEquals(GoogleMapsConverter.toY(48.147533416748, 2), 1);
@@ -28,11 +29,13 @@ public class GoogleMapsConverterTest extends TestBase {
 		assertEquals(GoogleMapsConverter.toY(48.147533416748, 17), 45482);
 	}
 
+	@Test
 	public void toLatitude() throws Exception {
 		assertEquals(GoogleMapsConverter.toLatitude(0, 1), 85.05112877980659);
 		assertEquals(GoogleMapsConverter.toLatitude(1, 2), 66.51326044311186);
 	}
 
+	@Test
 	public void calculateNorth() throws Exception {
 		assertEquals(GoogleMapsConverter.toY(85, 2), 0);
 		assertEquals(GoogleMapsConverter.toY(67, 2), 0);

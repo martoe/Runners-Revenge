@@ -1,5 +1,10 @@
 package at.bxm.running.graph.map;
 
+import at.bxm.running.graph.TestBase;
+import at.bxm.running.graph.TrackImage;
+import at.bxm.running.xml.FitnessWorkbook;
+import at.bxm.running.xml.XmlDecoder;
+import at.bxm.running.xml.XmlDecodingException;
 import java.awt.Graphics;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
@@ -10,11 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
 import org.testng.annotations.Test;
-import at.bxm.running.graph.TestBase;
-import at.bxm.running.graph.TrackImage;
-import at.bxm.running.xml.FitnessWorkbook;
-import at.bxm.running.xml.XmlDecoder;
-import at.bxm.running.xml.XmlDecodingException;
 
 @Test
 public class MapServiceTest extends TestBase {
@@ -57,8 +57,6 @@ public class MapServiceTest extends TestBase {
 		}
 	}
 
-	// FIXME unabhängig vom zoomfaktor: track um ca. 20-30px zu weit unten
-	// FIXME fehler bei zoom 17, 18
 	public void createTrackImage() throws IOException, XmlDecodingException {
 		BufferedReader in = null;
 		try {
