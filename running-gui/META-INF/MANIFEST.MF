@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: running-gui
+Bundle-Name: at.bxm.running.gui
 Bundle-SymbolicName: running-gui;singleton:=true
 Bundle-Version: 1.0.0.SNAPSHOT
 Bundle-Activator: at.bxm.running.gui.Activator
