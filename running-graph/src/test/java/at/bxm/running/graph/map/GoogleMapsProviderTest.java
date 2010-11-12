@@ -22,7 +22,7 @@ public class GoogleMapsProviderTest extends TestBase {
 							.getTrack());
 			MapProvider mapProvider = new GoogleMapsProvider();
 			MapLayout<?> layout = mapProvider.getLayout(track.getLatitudeMax(), track.getLatitudeMin(),
-							track.getLongitudeMax(), track.getLongitudeMin(), 17);
+							track.getLongitudeMax(), track.getLongitudeMin(), 12);
 			assertEquals(layout.getTileRows(), 2);
 			assertEquals(layout.getTileColumns(), 3);
 			assertTrue(layout.getLatNorth() >= track.getLatitudeMax());
@@ -38,6 +38,12 @@ public class GoogleMapsProviderTest extends TestBase {
 		} finally {
 			in.close();
 		}
+	}
+
+	public void donwloadInvalidImage() throws IOException, XmlDecodingException {
+		MapProvider mapProvider = new GoogleMapsProvider();
+		MapLayout<?> layout = mapProvider.getLayout(85, 85, 179, 179, 11);
+		assertEquals(layout.getTile(0, 0).getImage().length, 0);
 	}
 
 }

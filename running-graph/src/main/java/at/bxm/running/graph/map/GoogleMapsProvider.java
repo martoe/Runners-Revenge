@@ -7,12 +7,14 @@ import java.io.InputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 public class GoogleMapsProvider implements MapProvider {
-	private final Log logger = LogFactory.getLog(getClass());
+
+	private final HttpClient httpclient = new DefaultHttpClient();
 
 	@Override
 	public MapLayout<GoogleMapTile> getLayout(double latNorth, double latSouth, double lonEast,
@@ -34,7 +36,7 @@ public class GoogleMapsProvider implements MapProvider {
 		return layout;
 	}
 
-	private static class GoogleMapTile extends CachedMapTile {
+	private class GoogleMapTile extends CachedMapTile {
 		private final Log logger = LogFactory.getLog(getClass());
 		/** range 6-18 */
 		private final int zoom;
@@ -49,14 +51,16 @@ public class GoogleMapsProvider implements MapProvider {
 
 		@Override
 		public byte[] loadImage() throws IOException {
-			// FIXME do this right (check HTTP response code, reuse client, ev. parallel downloads, ev.
-			// timeouts)
-			HttpClient httpclient = new DefaultHttpClient();
+			// TODO use connection timeouts?
 			int serverNo = (int)Math.floor(Math.random() * 4);
 			HttpGet req = new HttpGet("http://khm" + serverNo + ".google.com/kh/v=45&hl=en&x=" + x
 							+ "&y=" + y + "&z=" + zoom + "&s=Galileo");
 			logger.debug("Downloading: " + req.getURI());
 			HttpResponse response = httpclient.execute(req);
+			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
+				logger.warn("Request to " + req.getURI() + " returned " + response.getStatusLine());
+				return new byte[0];
+			}
 			InputStream in = response.getEntity().getContent();
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			final byte[] buffer = new byte[1000];

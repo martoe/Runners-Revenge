@@ -23,13 +23,11 @@ public class JaxbTest {
 		assertEquals(fitlog.getAthleteLogs().size(), 1);
 		check(fitlog.getAthleteLogs().get(0).getAthlete());
 		assertEquals(fitlog.getAthleteLogs().get(0).getHistories().size(), 0);
-		assertEquals(fitlog.getAthleteLogs().get(0).getActivities().size(), 450); // FIXME 470???
+		assertEquals(fitlog.getAthleteLogs().get(0).getActivities().size(), 450);
 	}
 
 	private FitnessWorkbook parse(String filename) throws IOException, XmlDecodingException,
 					InterruptedException {
-		System.gc();
-		Thread.sleep(1000);
 		BufferedReader in = null;
 		try {
 			in = read(filename);
@@ -47,7 +45,7 @@ public class JaxbTest {
 
 	private void check(Track track, int points) {
 		assertNotNull(track);
-		assertEquals(track.getPoints().size(), 126);
+		assertEquals(track.getPoints().size(), points);
 		for (TrackPoint point : track.getPoints()) {
 			assertNotNull(point.getTm());
 			assertTrue(point.getLatitude() != null && point.getLongitude() != null

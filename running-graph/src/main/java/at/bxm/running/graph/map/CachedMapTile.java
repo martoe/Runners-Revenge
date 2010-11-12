@@ -68,8 +68,7 @@ public abstract class CachedMapTile implements MapTile {
 	}
 
 	private void writeToCache() throws IOException {
-		if (image != null && image.length > 0) { // TODO check if image is valid (i.e. not a HTTP error
-																							// page)
+		if (image != null) {
 			File target = new File(getCacheDir(), getCacheFile());
 			logger.debug("Writing " + image.length + " bytes to " + target.getAbsolutePath());
 			BufferedOutputStream out = null;

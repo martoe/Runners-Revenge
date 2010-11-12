@@ -1,18 +1,14 @@
 package at.bxm.running.graph;
 
+import at.bxm.running.xml.Track;
+import at.bxm.running.xml.TrackPoint;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import at.bxm.running.xml.Track;
-import at.bxm.running.xml.TrackPoint;
 
 public class TrackImage {
-
-	private final Log logger = LogFactory.getLog(getClass());
 
 	private final SortedSet<TrackPoint> track = new TreeSet<TrackPoint>(TrackPointComparator.INSTANCE);
 	private final double latitudeMin;
