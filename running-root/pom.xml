@@ -65,9 +65,9 @@
   	</dependency>
   </dependencies>
   <modules>
-    <module>running-persistence</module>
-    <module>running-xml</module>
-    <module>running-graph</module>
-    <module>running-gui</module>
+    <module>../running-persistence</module>
+    <module>../running-xml</module>
+    <module>../running-graph</module>
+    <module>../running-gui</module>
   </modules>
 </project>
