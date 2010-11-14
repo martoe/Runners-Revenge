@@ -1,4 +1,4 @@
-package at.bxm.running.graph.map;
+package at.bxm.running.graph.map.providers;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

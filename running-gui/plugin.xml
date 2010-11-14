@@ -36,7 +36,12 @@
       <command
             defaultHandler="at.bxm.running.gui.commands.ExitHandler"
             id="running-gui.commands.exit"
-            name="name">
+            name="Exit">
+      </command>
+      <command
+            defaultHandler="at.bxm.running.gui.commands.OpenFileHandler"
+            id="at.bxm.running.gui.commands.openFile"
+            name="Open">
       </command>
    </extension>
    <extension
@@ -49,11 +54,36 @@
                label="File">
             <command
                   commandId="running-gui.commands.exit"
-                  label="Exit"
+                  style="push">
+            </command>
+            <command
+                  commandId="at.bxm.running.gui.commands.openFile"
                   style="push">
             </command>
          </menu>
       </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="at.bxm.running.gui.views.MyView"
+            id="at.bxm.running.gui.views.MyView"
+            name="name"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="*">
+         <view
+               id="at.bxm.running.gui.views.MyView"
+               minimized="false"
+               ratio="0.95f"
+               relationship="top"
+               relative="org.eclipse.ui.editorss">
+         </view>
+      </perspectiveExtension>
    </extension>
 
 </plugin>

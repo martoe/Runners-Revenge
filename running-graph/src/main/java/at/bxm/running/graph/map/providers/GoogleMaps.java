@@ -1,9 +1,14 @@
-package at.bxm.running.graph.map;
+package at.bxm.running.graph.map.providers;
 
-import static at.bxm.running.graph.map.GoogleMapsConverter.*;
+import static at.bxm.running.graph.map.providers.GoogleMapsConverter.*;
+import at.bxm.running.graph.map.CachedMapTile;
+import at.bxm.running.graph.map.DefaultMapLayout;
+import at.bxm.running.graph.map.MapLayout;
+import at.bxm.running.graph.map.MapProvider;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
@@ -12,7 +17,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-public class GoogleMapsProvider implements MapProvider {
+public abstract class GoogleMaps implements MapProvider {
 
 	private final HttpClient httpclient = new DefaultHttpClient();
 
@@ -36,15 +41,21 @@ public class GoogleMapsProvider implements MapProvider {
 		return layout;
 	}
 
+	abstract URI getUrl(int x, int y, int zoom);
+
+	abstract int getMinZoomLevel();
+
+	abstract int getMaxZoomLevel();
+
 	private class GoogleMapTile extends CachedMapTile {
 		private final Log logger = LogFactory.getLog(getClass());
-		/** range 6-18 */
 		private final int zoom;
 		private final int x;
 		private final int y;
 
 		public GoogleMapTile(int zoom, int x, int y) {
-			this.zoom = Math.min(Math.max(zoom, 6), 18);
+			super(GoogleMaps.this.getClass().getSimpleName());
+			this.zoom = Math.min(Math.max(zoom, getMinZoomLevel()), getMaxZoomLevel());
 			this.x = x;
 			this.y = y;
 		}
@@ -52,9 +63,10 @@ public class GoogleMapsProvider implements MapProvider {
 		@Override
 		public byte[] loadImage() throws IOException {
 			// TODO use connection timeouts?
-			int serverNo = (int)Math.floor(Math.random() * 4);
-			HttpGet req = new HttpGet("http://khm" + serverNo + ".google.com/kh/v=45&hl=en&x=" + x
-							+ "&y=" + y + "&z=" + zoom + "&s=Galileo");
+			HttpGet req = new HttpGet(getUrl(x, y, zoom));
+
+			// http://mt3.google.com/vt/lyrs=&hl=en&x=8935&y=5686&z=14&s=Galileo
+
 			logger.debug("Downloading: " + req.getURI());
 			HttpResponse response = httpclient.execute(req);
 			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {

@@ -2,6 +2,7 @@ package at.bxm.running.graph.map;
 
 import at.bxm.running.graph.TestBase;
 import at.bxm.running.graph.TrackImage;
+import at.bxm.running.graph.map.providers.GoogleMapsSatellite;
 import at.bxm.running.xml.FitnessWorkbook;
 import at.bxm.running.xml.XmlDecoder;
 import at.bxm.running.xml.XmlDecodingException;
@@ -21,7 +22,7 @@ public class MapServiceTest extends TestBase {
 
 	public void createHomeImage() throws IOException {
 		// download my home at various zoom levels
-		MapProvider mp = new GoogleMapsProvider();
+		MapProvider mp = new GoogleMapsSatellite();
 		for (int i = 6; i < 19; i++) {
 			MapLayout<?> layout = mp.getLayout(48.147533416748, 48.147533416748, 16.3582229614258,
 							16.3582229614258, i);
@@ -64,7 +65,7 @@ public class MapServiceTest extends TestBase {
 			FitnessWorkbook fitlog = new XmlDecoder().parseLogbook(in);
 			TrackImage track = new TrackImage(fitlog.getAthleteLogs().get(0).getActivities().get(0)
 							.getTrack());
-			MapProvider mp = new GoogleMapsProvider();
+			MapProvider mp = new GoogleMapsSatellite();
 			MapService mapService = new MapService();
 			mapService.setMapProvider(mp);
 			for (int i = 6; i < 19; i++) {

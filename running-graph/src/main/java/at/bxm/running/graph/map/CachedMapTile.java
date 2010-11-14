@@ -20,7 +20,12 @@ import org.apache.commons.logging.LogFactory;
 public abstract class CachedMapTile implements MapTile {
 
 	protected final Log logger = LogFactory.getLog(getClass());
+	private final String cacheName;
 	private byte[] image;
+
+	public CachedMapTile(String cacheName) {
+		this.cacheName = cacheName;
+	}
 
 	@Override
 	public final byte[] getImage() throws IOException {
@@ -85,7 +90,7 @@ public abstract class CachedMapTile implements MapTile {
 
 	// TODO better use a local var
 	private File getCacheDir() throws IOException {
-		File cacheDir = new File("cache/" + getClass().getSimpleName());
+		File cacheDir = new File("cache/" + cacheName);
 		cacheDir.mkdirs();
 		if (!cacheDir.exists()) {
 			throw new IOException("Cache directory doesn't exist: " + cacheDir.getAbsolutePath());

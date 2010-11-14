@@ -1,6 +1,7 @@
 package at.bxm.running.graph.map;
 
 import static org.testng.Assert.*;
+import at.bxm.running.graph.map.providers.GoogleMapsConverter;
 import at.bxm.running.graph.TestBase;
 import org.testng.annotations.Test;
 

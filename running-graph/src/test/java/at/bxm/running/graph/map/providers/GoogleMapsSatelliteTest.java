@@ -1,8 +1,10 @@
-package at.bxm.running.graph.map;
+package at.bxm.running.graph.map.providers;
 
 import static org.testng.Assert.*;
 import at.bxm.running.graph.TestBase;
 import at.bxm.running.graph.TrackImage;
+import at.bxm.running.graph.map.MapLayout;
+import at.bxm.running.graph.map.MapProvider;
 import at.bxm.running.xml.FitnessWorkbook;
 import at.bxm.running.xml.XmlDecoder;
 import at.bxm.running.xml.XmlDecodingException;
@@ -11,7 +13,7 @@ import java.io.IOException;
 import org.testng.annotations.Test;
 
 @Test
-public class GoogleMapsProviderTest extends TestBase {
+public class GoogleMapsSatelliteTest extends TestBase {
 
 	public void createTrackImage() throws IOException, XmlDecodingException {
 		BufferedReader in = null;
@@ -20,7 +22,7 @@ public class GoogleMapsProviderTest extends TestBase {
 			FitnessWorkbook fitlog = new XmlDecoder().parseLogbook(in);
 			TrackImage track = new TrackImage(fitlog.getAthleteLogs().get(0).getActivities().get(0)
 							.getTrack());
-			MapProvider mapProvider = new GoogleMapsProvider();
+			MapProvider mapProvider = new GoogleMapsSatellite();
 			MapLayout<?> layout = mapProvider.getLayout(track.getLatitudeMax(), track.getLatitudeMin(),
 							track.getLongitudeMax(), track.getLongitudeMin(), 12);
 			assertEquals(layout.getTileRows(), 2);
@@ -41,7 +43,7 @@ public class GoogleMapsProviderTest extends TestBase {
 	}
 
 	public void donwloadInvalidImage() throws IOException, XmlDecodingException {
-		MapProvider mapProvider = new GoogleMapsProvider();
+		MapProvider mapProvider = new GoogleMapsSatellite();
 		MapLayout<?> layout = mapProvider.getLayout(85, 85, 179, 179, 11);
 		assertEquals(layout.getTile(0, 0).getImage().length, 0);
 	}
