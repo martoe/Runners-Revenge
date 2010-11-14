@@ -13,7 +13,7 @@ import java.io.IOException;
 import org.testng.annotations.Test;
 
 @Test
-public class GoogleMapsSatelliteTest extends TestBase {
+public class GoogleMapsStreetTest extends TestBase {
 
 	public void createTrackImage() throws IOException, XmlDecodingException {
 		BufferedReader in = null;
@@ -22,7 +22,7 @@ public class GoogleMapsSatelliteTest extends TestBase {
 			FitnessWorkbook fitlog = new XmlDecoder().parseLogbook(in);
 			TrackImage track = new TrackImage(fitlog.getAthleteLogs().get(0).getActivities().get(0)
 							.getTrack());
-			MapProvider mapProvider = new GoogleMapsSatellite();
+			MapProvider mapProvider = new GoogleMapsStreet();
 			MapLayout<?> layout = mapProvider.getLayout(track.getLatitudeMax(), track.getLatitudeMin(),
 							track.getLongitudeMax(), track.getLongitudeMin(), 17);
 			assertEquals(layout.getTileRows(), 2);
@@ -33,21 +33,15 @@ public class GoogleMapsSatelliteTest extends TestBase {
 			assertTrue(layout.getLonWest() <= track.getLongitudeMin());
 			for (int i = 0; i < layout.getTileRows(); i++) {
 				for (int j = 0; j < layout.getTileColumns(); j++) {
-					assertTrue(layout.getTile(i, j).getImage().length > 10000, "Size of image " + i + "/" + j
+					assertTrue(layout.getTile(i, j).getImage().length > 2000, "Size of image " + i + "/" + j
 									+ " is only " + layout.getTile(i, j).getImage().length);
-					assertTrue(layout.getTile(i, j).getImage().length < 20000, "Size of image " + i + "/" + j
+					assertTrue(layout.getTile(i, j).getImage().length < 10000, "Size of image " + i + "/" + j
 									+ " is too large: " + layout.getTile(i, j).getImage().length);
 				}
 			}
 		} finally {
 			in.close();
 		}
-	}
-
-	public void donwloadInvalidImage() throws IOException, XmlDecodingException {
-		MapProvider mapProvider = new GoogleMapsSatellite();
-		MapLayout<?> layout = mapProvider.getLayout(85, 85, 179, 179, 11);
-		assertEquals(layout.getTile(0, 0).getImage().length, 0);
 	}
 
 }
