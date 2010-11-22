@@ -1,5 +1,9 @@
 package at.bxm.running.gui.commands;
 
+import at.bxm.running.gui.ActiveWorkbook;
+import at.bxm.running.xml.XmlDecodingException;
+import java.io.File;
+import java.io.IOException;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -12,44 +16,20 @@ public class OpenFileHandler extends AbstractHandler {
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		Shell shell = HandlerUtil.getActiveWorkbenchWindow(event).getShell();
-
-		// File standard dialog
 		FileDialog fileDialog = new FileDialog(shell);
-		// Set the text
 		fileDialog.setText("Select File");
-		// Set filter on .txt files
 		fileDialog.setFilterExtensions(new String[] { "*.fitlog" });
-		// Put in a readable name for the filter
 		fileDialog.setFilterNames(new String[] { "Fitness Log (*.fitlog)" });
-		// Open Dialog and save result of selection
 		String selected = fileDialog.open();
-		System.out.println(selected);
-
-		// // Directly standard selection
-		// DirectoryDialog dirDialog = new DirectoryDialog(shell);
-		// dirDialog.setText("Select your home directory");
-		// String selectedDir = dirDialog.open();
-		// System.out.println(selectedDir);
-		//
-		// // Select Font
-		// FontDialog fontDialog = new FontDialog(shell);
-		// fontDialog.setText("Select your favorite font");
-		// FontData selectedFont = fontDialog.open();
-		// System.out.println(selectedFont);
-		//
-		// // Select Color
-		// ColorDialog colorDialog = new ColorDialog(shell);
-		// colorDialog.setText("Select your favorite color");
-		// RGB selectedColor = colorDialog.open();
-		// System.out.println(selectedColor);
-		//
-		// // Now a few messages
-		// MessageDialog.openConfirm(shell, "Confirm", "Please confirm");
-		// MessageDialog.openError(shell, "Error", "Error occured");
-		// MessageDialog.openInformation(shell, "Info", "Info for you");
-		// MessageDialog.openQuestion(shell, "Question", "Really, really?");
-		// MessageDialog.openWarning(shell, "Warning", "I warn you");
-
+		if (selected != null) {
+			try {
+				ActiveWorkbook.getInstance().open(new File(selected));
+			} catch (IOException e) {
+				throw new ExecutionException(e.getMessage(), e);
+			} catch (XmlDecodingException e) {
+				throw new ExecutionException(e.getMessage(), e);
+			}
+		}
 		return null;
 	}
 
