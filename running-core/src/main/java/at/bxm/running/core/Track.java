@@ -1,4 +1,5 @@
-package at.bxm.running.xml;
+package at.bxm.running.core;
+
 
 import java.util.Collections;
 import java.util.List;

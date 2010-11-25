@@ -1,6 +1,6 @@
-package at.bxm.running.xml;
+package at.bxm.running.core;
 
-@Deprecated
+
 public class History extends FitlogNode {
 
 	/** <xs:attribute name="Date" type="xs:date" use="required"/> */

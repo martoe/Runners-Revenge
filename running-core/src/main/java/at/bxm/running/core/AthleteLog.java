@@ -1,11 +1,11 @@
-package at.bxm.running.xml;
+package at.bxm.running.core;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 
-@Deprecated
 public class AthleteLog extends FitlogNode {
 
 	/** <xs:element ref="Athlete" minOccurs="0" maxOccurs="1"/> */
@@ -23,11 +23,11 @@ public class AthleteLog extends FitlogNode {
 	}
 
 	public List<Activity> getActivities() {
-		return activities != null ? activities : Collections.<Activity>emptyList();
+		return activities != null ? activities : Collections.<Activity> emptyList();
 	}
 
 	public List<History> getHistories() {
-		return histories != null ? histories : Collections.<History>emptyList();
+		return histories != null ? histories : Collections.<History> emptyList();
 	}
 
 }

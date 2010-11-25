@@ -1,5 +1,10 @@
 package at.bxm.running.gui.views;
 
+import at.bxm.running.core.Activity;
+import at.bxm.running.core.FitnessWorkbook;
+import at.bxm.running.core.Track;
+import at.bxm.running.gui.ActiveWorkbook;
+import at.bxm.running.gui.WorkbookListener;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -11,11 +16,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.part.ViewPart;
-import at.bxm.running.gui.ActiveWorkbook;
-import at.bxm.running.gui.WorkbookListener;
-import at.bxm.running.xml.Activity;
-import at.bxm.running.xml.FitnessWorkbook;
-import at.bxm.running.xml.Track;
 
 public class ActivitiesView extends ViewPart {
 	private TableViewer tableViewer;

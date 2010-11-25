@@ -1,4 +1,5 @@
-package at.bxm.running.xml;
+package at.bxm.running.core;
+
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;

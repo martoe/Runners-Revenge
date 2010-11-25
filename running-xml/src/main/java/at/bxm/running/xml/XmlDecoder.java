@@ -1,5 +1,6 @@
 package at.bxm.running.xml;
 
+import at.bxm.running.core.FitnessWorkbook;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,14 +12,13 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 public class XmlDecoder {
 
 	private static final char[] XML_PREFIX = new char[] { 239, 187, 191 };
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+
+	// FIXME private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	public void readPrefix(Reader in) throws IOException, XmlDecodingException {
 		char[] prefix = new char[3];
@@ -50,8 +50,8 @@ public class XmlDecoder {
 		} finally {
 			long endParse = System.currentTimeMillis();
 			long endParseMem = rt.totalMemory() - rt.freeMemory();
-			logger.info("Parsing took " + (endParse - startParse) + " ms, consumed "
-							+ (endParseMem - startParseMem) + " bytes");
+			// FIXME logger.info("Parsing took " + (endParse - startParse) + " ms, consumed "
+			//				+ (endParseMem - startParseMem) + " bytes");
 			try {
 				in.close();
 			} catch (Exception ignore) {}

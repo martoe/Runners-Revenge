@@ -1,5 +1,8 @@
 package at.bxm.running.gui.views;
 
+import at.bxm.running.core.FitnessWorkbook;
+import at.bxm.running.gui.ActiveWorkbook;
+import at.bxm.running.gui.WorkbookListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
@@ -7,9 +10,6 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.ViewPart;
-import at.bxm.running.gui.ActiveWorkbook;
-import at.bxm.running.gui.WorkbookListener;
-import at.bxm.running.xml.FitnessWorkbook;
 
 public class SimpleActivitiesView extends ViewPart {
 	private ListViewer tableViewer;

@@ -1,6 +1,6 @@
 package at.bxm.running.gui;
 
-import at.bxm.running.xml.FitnessWorkbook;
+import at.bxm.running.core.FitnessWorkbook;
 import at.bxm.running.xml.XmlDecoder;
 import at.bxm.running.xml.XmlDecodingException;
 import java.io.File;

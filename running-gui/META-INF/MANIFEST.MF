@@ -5,6 +5,8 @@ Bundle-SymbolicName: running-gui;singleton:=true
 Bundle-Version: 1.0.0.SNAPSHOT
 Bundle-Activator: at.bxm.running.gui.Activator
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ at.bxm.running.core;bundle-version="1.0.0",
+ at.bxm.running.xml;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

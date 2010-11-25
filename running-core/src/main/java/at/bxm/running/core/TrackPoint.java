@@ -1,8 +1,8 @@
-package at.bxm.running.xml;
+package at.bxm.running.core;
+
 
 import javax.xml.bind.annotation.XmlAttribute;
 
-@Deprecated
 public class TrackPoint extends FitlogNode {
 
 	/** <xs:attribute name="tm" type="xs:decimal" use="required"/> */

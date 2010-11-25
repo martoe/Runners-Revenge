@@ -1,7 +1,7 @@
 package at.bxm.running.graph;
 
-import at.bxm.running.xml.Track;
-import at.bxm.running.xml.TrackPoint;
+import at.bxm.running.core.Track;
+import at.bxm.running.core.TrackPoint;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

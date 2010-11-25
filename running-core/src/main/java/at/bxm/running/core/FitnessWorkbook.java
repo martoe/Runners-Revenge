@@ -1,4 +1,5 @@
-package at.bxm.running.xml;
+package at.bxm.running.core;
+
 
 import java.io.StringWriter;
 import java.util.Collections;
@@ -7,7 +8,6 @@ import javax.xml.bind.JAXB;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@Deprecated
 @XmlRootElement(name = "FitnessWorkbook", namespace = FitlogNode.NAMESPACE)
 public class FitnessWorkbook extends FitlogNode {
 

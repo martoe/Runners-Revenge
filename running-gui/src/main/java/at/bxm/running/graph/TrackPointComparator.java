@@ -1,6 +1,6 @@
 package at.bxm.running.graph;
 
-import at.bxm.running.xml.TrackPoint;
+import at.bxm.running.core.TrackPoint;
 import java.util.Comparator;
 
 @Deprecated
