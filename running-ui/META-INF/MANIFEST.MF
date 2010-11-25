@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: at.bxm.running.gui
 Bundle-SymbolicName: at.bxm.running.ui;singleton:=true
-Bundle-Version: 1.0.0.SNAPSHOT
+Bundle-Version: 1.0.0
 Bundle-Activator: at.bxm.running.ui.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
