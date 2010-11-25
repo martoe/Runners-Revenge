@@ -54,9 +54,15 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            class="at.bxm.running.gui.views.MyView"
-            id="at.bxm.running.gui.views.MyView"
-            name="MyView"
+            class="at.bxm.running.gui.views.SimpleActivitiesView"
+            id="at.bxm.running.gui.views.simpleActivitiesView"
+            name="SimpleActivitiesView"
+            restorable="true">
+      </view>
+      <view
+            class="at.bxm.running.gui.views.ActivitiesView"
+            id="at.bxm.running.gui.views.activitiesView"
+            name="ActivitiesView"
             restorable="true">
       </view>
    </extension>
@@ -65,11 +71,18 @@
       <perspectiveExtension
             targetID="*">
          <view
-               id="at.bxm.running.gui.views.MyView"
+               id="at.bxm.running.gui.views.simpleActivitiesView"
                minimized="false"
-               ratio="0.95f"
+               ratio="1.0f"
                relationship="top"
                relative="org.eclipse.ui.editorss">
+         </view>
+         <view
+               id="at.bxm.running.gui.views.activitiesView"
+               minimized="false"
+               ratio="1.0f"
+               relationship="stack"
+               relative="at.bxm.running.gui.views.simpleActivitiesView">
          </view>
       </perspectiveExtension>
    </extension>
