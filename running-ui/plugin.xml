@@ -7,7 +7,7 @@
          point="org.eclipse.core.runtime.applications">
       <application>
          <run
-               class="at.bxm.running.gui.Application">
+               class="at.bxm.running.ui.Application">
          </run>
       </application>
    </extension>
@@ -15,7 +15,7 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             name="RCP Perspective"
-            class="at.bxm.running.gui.Perspective"
+            class="at.bxm.running.ui.Perspective"
             id="at.bxm.running.gui.perspective">
       </perspective>
    </extension>

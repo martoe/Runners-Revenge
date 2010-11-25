@@ -1,8 +1,8 @@
 package at.bxm.running.gui.views;
 
 import at.bxm.running.core.FitnessWorkbook;
-import at.bxm.running.gui.ActiveWorkbook;
-import at.bxm.running.gui.WorkbookListener;
+import at.bxm.running.ui.ActiveWorkbook;
+import at.bxm.running.ui.WorkbookListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;

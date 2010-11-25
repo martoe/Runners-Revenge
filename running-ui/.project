@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>running-gui</name>
+	<name>at.bxm.running.ui</name>
 	<comment></comment>
 	<projects>
+		<project>at.bxm.running.core</project>
+		<project>at.bxm.running.xml</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

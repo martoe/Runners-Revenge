@@ -1,6 +1,6 @@
 package at.bxm.running.gui.commands;
 
-import at.bxm.running.gui.ActiveWorkbook;
+import at.bxm.running.ui.ActiveWorkbook;
 import at.bxm.running.xml.XmlDecodingException;
 import java.io.File;
 import java.io.IOException;
