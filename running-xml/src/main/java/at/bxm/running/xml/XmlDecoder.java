@@ -1,6 +1,5 @@
 package at.bxm.running.xml;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Arrays;
@@ -29,7 +28,7 @@ public class XmlDecoder {
 		Runtime rt = Runtime.getRuntime();
 		final long startParseMem = rt.totalMemory() - rt.freeMemory();
 		final long startParse = System.currentTimeMillis();
-		BufferedReader schemaReader = null;
+		// BufferedReader schemaReader = null;
 		try {
 			readPrefix(in);
 			JAXBContext jc = JAXBContext.newInstance(FitnessWorkbook.class);
@@ -53,9 +52,9 @@ public class XmlDecoder {
 			try {
 				in.close();
 			} catch (Exception ignore) {}
-			try {
-				schemaReader.close();
-			} catch (Exception ignore) {}
+			// try {
+			// schemaReader.close();
+			// } catch (Exception ignore) {}
 		}
 	}
 
