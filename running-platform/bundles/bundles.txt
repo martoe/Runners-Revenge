@@ -1,0 +1,9 @@
+SLF4J: http://ebr.springsource.com/repository/app/
+	com.springsource.org.apache.log4j-1.2.16.jar
+	com.springsource.slf4j.api-1.6.1.jar
+	com.springsource.slf4j.log4j-1.6.1.jar
+
+HttpComponents: http://hc.apache.org/downloads.cgi
+	org.apache.httpcomponents.httpclient_4.0.3.jar
+	org.apache.httpcomponents.httpcore_4.1.jar
+	

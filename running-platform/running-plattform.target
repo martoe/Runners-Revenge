@@ -3,9 +3,10 @@
 
 <target name="at.bxm.running.platform">
 <locations>
-<location path="${eclipse_home}" type="Profile"/>
 <location path="${project_loc}/bundles" type="Directory"/>
+<location path="${eclipse_home}" type="Profile"/>
 </locations>
+<includeBundles/>
 <environment>
 <os>win32</os>
 <ws>win32</ws>
