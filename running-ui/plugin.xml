@@ -22,12 +22,12 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="at.bxm.running.gui.commands.ExitHandler"
+            defaultHandler="at.bxm.running.ui.commands.ExitHandler"
             id="running-gui.commands.exit"
             name="Exit">
       </command>
       <command
-            defaultHandler="at.bxm.running.gui.commands.OpenFileHandler"
+            defaultHandler="at.bxm.running.ui.commands.OpenFileHandler"
             id="at.bxm.running.gui.commands.openFile"
             name="Open">
       </command>
@@ -54,13 +54,13 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            class="at.bxm.running.gui.views.SimpleActivitiesView"
-            id="at.bxm.running.gui.views.simpleActivitiesView"
-            name="SimpleActivitiesView"
+            class="at.bxm.running.ui.views.MapView"
+            id="at.bxm.running.gui.views.mapView"
+            name="MapView"
             restorable="true">
       </view>
       <view
-            class="at.bxm.running.gui.views.ActivitiesView"
+            class="at.bxm.running.ui.views.ActivitiesView"
             id="at.bxm.running.gui.views.activitiesView"
             name="ActivitiesView"
             restorable="true">
@@ -71,18 +71,18 @@
       <perspectiveExtension
             targetID="*">
          <view
-               id="at.bxm.running.gui.views.simpleActivitiesView"
+               id="at.bxm.running.gui.views.activitiesView"
                minimized="false"
                ratio="1.0f"
                relationship="top"
                relative="org.eclipse.ui.editorss">
          </view>
          <view
-               id="at.bxm.running.gui.views.activitiesView"
+               id="at.bxm.running.gui.views.mapView"
                minimized="false"
                ratio="1.0f"
-               relationship="stack"
-               relative="at.bxm.running.gui.views.simpleActivitiesView">
+               relationship="right"
+               relative="at.bxm.running.gui.views.activitiesView">
          </view>
       </perspectiveExtension>
    </extension>

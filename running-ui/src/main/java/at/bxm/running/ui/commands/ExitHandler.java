@@ -1,4 +1,4 @@
-package at.bxm.running.gui.commands;
+package at.bxm.running.ui.commands;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;

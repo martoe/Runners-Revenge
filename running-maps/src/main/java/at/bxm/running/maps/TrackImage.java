@@ -1,12 +1,12 @@
 package at.bxm.running.maps;
 
+import at.bxm.running.core.Track;
+import at.bxm.running.core.TrackPoint;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import at.bxm.running.core.Track;
-import at.bxm.running.core.TrackPoint;
 
 public class TrackImage {
 
@@ -47,16 +47,11 @@ public class TrackImage {
 	/**
 	 * draw the track onto an image
 	 * 
-	 * @param image
-	 *          the image to draw this track
-	 * @param latNorth
-	 *          the latitude of the image's north border
-	 * @param latSouth
-	 *          the latitude of the image's south border
-	 * @param lonEast
-	 *          the longitude of the image's east border
-	 * @param lonWest
-	 *          the longitude of the image's west border
+	 * @param image the image to draw this track
+	 * @param latNorth the latitude of the image's north border
+	 * @param latSouth the latitude of the image's south border
+	 * @param lonEast the longitude of the image's east border
+	 * @param lonWest the longitude of the image's west border
 	 */
 	public void draw(BufferedImage image, double latNorth, double latSouth, double lonEast,
 					double lonWest) {
@@ -95,6 +90,10 @@ public class TrackImage {
 
 	public double getLongitudeMax() {
 		return longitudeMax;
+	}
+
+	public SortedSet<TrackPoint> getTrack() {
+		return track;
 	}
 
 }

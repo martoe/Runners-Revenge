@@ -9,3 +9,5 @@ Require-Bundle: at.bxm.running.xml;bundle-version="1.0.0",
  org.apache.commons.lang;bundle-version="2.3.0",
  org.apache.httpcomponents.httpclient;bundle-version="4.0.0",
  org.apache.httpcomponents.httpcore;bundle-version="4.0.0"
+Export-Package: at.bxm.running.maps,
+ at.bxm.running.maps.providers

@@ -1,4 +1,4 @@
-package at.bxm.running.gui.views;
+package at.bxm.running.ui.views;
 
 import at.bxm.running.core.Activity;
 import at.bxm.running.core.FitnessWorkbook;
@@ -23,6 +23,7 @@ public class ActivitiesView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 		tableViewer = new TableViewer(parent, SWT.BORDER | SWT.MULTI | SWT.V_SCROLL | SWT.H_SCROLL);
+		getSite().setSelectionProvider(tableViewer); // FIXME ...
 		Table table = tableViewer.getTable();
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);

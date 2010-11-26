@@ -1,4 +1,4 @@
-package at.bxm.running.gui.commands;
+package at.bxm.running.ui.commands;
 
 import at.bxm.running.ui.ActiveWorkbook;
 import at.bxm.running.xml.XmlDecodingException;

@@ -7,6 +7,8 @@ Bundle-Activator: at.bxm.running.ui.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  at.bxm.running.core;bundle-version="1.0.0",
- at.bxm.running.xml;bundle-version="1.0.0"
+ at.bxm.running.xml;bundle-version="1.0.0",
+ at.bxm.running.maps;bundle-version="1.0.0",
+ com.springsource.slf4j.api;bundle-version="1.6.1"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
