@@ -1,5 +1,6 @@
 package at.bxm.running.maps;
 
+import at.bxm.running.maps.TrackImage.BufferedImageCanvas;
 import java.awt.Graphics;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
@@ -7,13 +8,13 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 // TODO wiring stuff
 public class MapService {
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	private final Log logger = LogFactory.getLog(getClass());
 	private MapProvider mapProvider;
 
 	public void setMapProvider(MapProvider value) {
@@ -50,8 +51,8 @@ public class MapService {
 			}
 			y += colHeight;
 		}
-		data.draw(image, layout.getLatNorth(), layout.getLatSouth(), layout.getLonEast(),
-						layout.getLonWest());
+		data.draw(new BufferedImageCanvas(image), layout.getLatNorth(), layout.getLatSouth(),
+						layout.getLonEast(), layout.getLonWest());
 		return image;
 	}
 

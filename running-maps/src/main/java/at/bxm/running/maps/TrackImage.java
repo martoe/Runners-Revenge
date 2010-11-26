@@ -2,7 +2,6 @@ package at.bxm.running.maps;
 
 import at.bxm.running.core.Track;
 import at.bxm.running.core.TrackPoint;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.SortedSet;
@@ -53,15 +52,12 @@ public class TrackImage {
 	 * @param lonEast the longitude of the image's east border
 	 * @param lonWest the longitude of the image's west border
 	 */
-	public void draw(BufferedImage image, double latNorth, double latSouth, double lonEast,
+	public void draw(TrackCanvas target, double latNorth, double latSouth, double lonEast,
 					double lonWest) {
-		Graphics gr = image.getGraphics();
-		gr.setColor(Color.BLUE);
-
 		// multiply each longitude with this value to place it on the image:
-		double scaleFactorX = image.getWidth() / (lonEast - lonWest);
+		double scaleFactorX = target.getWidth() / (lonEast - lonWest);
 		// multiply each latitude with this value to place it on the image:
-		double scaleFactorY = image.getHeight() / (latNorth - latSouth);
+		double scaleFactorY = target.getHeight() / (latNorth - latSouth);
 
 		int lastPointX = -1;
 		int lastPointY = -1;
@@ -69,7 +65,7 @@ public class TrackImage {
 			int thisPointX = (int)Math.round((thisPoint.getLongitude() - lonWest) * scaleFactorX);
 			int thisPointY = (int)Math.round((latNorth - thisPoint.getLatitude()) * scaleFactorY);
 			if (lastPointX >= 0) {
-				gr.drawLine(lastPointX, lastPointY, thisPointX, thisPointY);
+				target.drawLine(lastPointX, lastPointY, thisPointX, thisPointY);
 			}
 			lastPointX = thisPointX;
 			lastPointY = thisPointY;
@@ -96,4 +92,36 @@ public class TrackImage {
 		return track;
 	}
 
+	public static interface TrackCanvas {
+		double getWidth();
+
+		double getHeight();
+
+		void drawLine(int x1, int y1, int x2, int y2);
+	}
+
+	public static class BufferedImageCanvas implements TrackCanvas {
+		private final BufferedImage image;
+		private final Graphics graphics;
+
+		public BufferedImageCanvas(BufferedImage image) {
+			this.image = image;
+			graphics = image.getGraphics();
+		}
+
+		@Override
+		public double getWidth() {
+			return image.getWidth();
+		}
+
+		@Override
+		public double getHeight() {
+			return image.getHeight();
+		}
+
+		@Override
+		public void drawLine(int x1, int y1, int x2, int y2) {
+			graphics.drawLine(x1, y1, x2, y2);
+		}
+	}
 }

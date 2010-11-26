@@ -1,21 +1,21 @@
 package at.bxm.running.maps.providers;
 
 import static at.bxm.running.maps.providers.GoogleMapsConverter.*;
+import at.bxm.running.maps.CachedMapTile;
+import at.bxm.running.maps.DefaultMapLayout;
+import at.bxm.running.maps.MapLayout;
+import at.bxm.running.maps.MapProvider;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import at.bxm.running.maps.CachedMapTile;
-import at.bxm.running.maps.DefaultMapLayout;
-import at.bxm.running.maps.MapLayout;
-import at.bxm.running.maps.MapProvider;
 
 public abstract class GoogleMaps implements MapProvider {
 
@@ -48,7 +48,7 @@ public abstract class GoogleMaps implements MapProvider {
 	abstract int getMaxZoomLevel();
 
 	private class GoogleMapTile extends CachedMapTile {
-		private final Logger logger = LoggerFactory.getLogger(getClass());
+		private final Log logger = LogFactory.getLog(getClass());
 		private final int zoom;
 		private final int x;
 		private final int y;

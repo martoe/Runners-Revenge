@@ -1,21 +1,22 @@
 package at.bxm.running.ui.views;
 
 import at.bxm.running.core.Activity;
-import at.bxm.running.core.TrackPoint;
 import at.bxm.running.maps.MapLayout;
 import at.bxm.running.maps.MapProvider;
 import at.bxm.running.maps.MapService;
 import at.bxm.running.maps.MapTile;
 import at.bxm.running.maps.TrackImage;
+import at.bxm.running.maps.TrackImage.TrackCanvas;
 import at.bxm.running.maps.providers.GoogleMapsSatellite;
 import java.io.IOException;
 import java.io.InputStream;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -24,15 +25,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class MapView extends ViewPart implements ISelectionListener {
-	private final Logger logger = LoggerFactory.getLogger(MapView.class);
+	private final Log logger = LogFactory.getLog(MapView.class);
 	private Canvas canvas;
 	private final MapProvider mapProvider = new GoogleMapsSatellite();
 	private Activity selectedActivity;
-	private Image activityImage;
+	private SwtTrackCanvas trackCanvas;
 
 	@Override
 	public void createPartControl(Composite parent) {
@@ -42,18 +41,18 @@ public class MapView extends ViewPart implements ISelectionListener {
 			@Override
 			public void paintControl(PaintEvent e) {
 				if (selectedActivity != null) {
-					if (activityImage == null) {
+					if (trackCanvas == null) {
 						logger.debug("Drawing " + selectedActivity + "...");
 						TrackImage track = new TrackImage(selectedActivity.getTrack());
 						MapService mapService = new MapService();
 						mapService.setMapProvider(mapProvider);
 						try {
-							activityImage = createImage(e.gc.getDevice(), track, 17);
+							trackCanvas = createImage(e.gc.getDevice(), track, 17);
 						} catch (IOException ex) {
-							logger.warn("Could not create image for " + track, e);
+							logger.warn("Could not create image for " + track, ex);
 						}
 					}
-					e.gc.drawImage(activityImage, 0, 0);
+					e.gc.drawImage(trackCanvas.getImage(), 0, 0);
 				}
 			}
 		});
@@ -68,14 +67,15 @@ public class MapView extends ViewPart implements ISelectionListener {
 			Object selectedElement = ((IStructuredSelection)selection).getFirstElement();
 			if (selectedElement instanceof Activity) {
 				selectedActivity = (Activity)selectedElement;
-				activityImage = null;
+				trackCanvas = null;
 				canvas.redraw();
 			}
 		}
 	}
 
 	// TODO copied from MapService
-	private Image createImage(Device device, TrackImage data, double resolution) throws IOException {
+	private SwtTrackCanvas createImage(Device device, TrackImage data, double resolution)
+					throws IOException {
 		MapLayout<?> layout = mapProvider.getLayout(data.getLatitudeMax(), data.getLatitudeMin(),
 						data.getLongitudeMax(), data.getLongitudeMin(), resolution);
 		int width = layout.getTileWidth() * layout.getTileColumns();
@@ -101,31 +101,38 @@ public class MapView extends ViewPart implements ISelectionListener {
 			}
 			y += colHeight;
 		}
-		draw(image, gr, data, layout.getLatNorth(), layout.getLatSouth(), layout.getLonEast(),
+		SwtTrackCanvas c = new SwtTrackCanvas(image, gr);
+		data.draw(c, layout.getLatNorth(), layout.getLatSouth(), layout.getLonEast(),
 						layout.getLonWest());
-		return image;
+		return c;
 	}
 
-	// FIXME copied from TrackImage
-	public void draw(Image image, GC gr, TrackImage data, double latNorth, double latSouth,
-					double lonEast, double lonWest) {
-		gr.setForeground(new Color(image.getDevice(), 0, 0, 255));
+	public static class SwtTrackCanvas implements TrackCanvas {
+		private final Image image;
+		private final GC graphics;
 
-		// multiply each longitude with this value to place it on the image:
-		double scaleFactorX = image.getBounds().width / (lonEast - lonWest);
-		// multiply each latitude with this value to place it on the image:
-		double scaleFactorY = image.getBounds().height / (latNorth - latSouth);
+		public SwtTrackCanvas(Image image, GC gc) {
+			this.image = image;
+			graphics = gc;
+		}
 
-		int lastPointX = -1;
-		int lastPointY = -1;
-		for (TrackPoint thisPoint : data.getTrack()) {
-			int thisPointX = (int)Math.round((thisPoint.getLongitude() - lonWest) * scaleFactorX);
-			int thisPointY = (int)Math.round((latNorth - thisPoint.getLatitude()) * scaleFactorY);
-			if (lastPointX >= 0) {
-				gr.drawLine(lastPointX, lastPointY, thisPointX, thisPointY);
-			}
-			lastPointX = thisPointX;
-			lastPointY = thisPointY;
+		@Override
+		public double getWidth() {
+			return image.getBounds().width;
+		}
+
+		@Override
+		public double getHeight() {
+			return image.getBounds().height;
+		}
+
+		@Override
+		public void drawLine(int x1, int y1, int x2, int y2) {
+			graphics.drawLine(x1, y1, x2, y2);
+		}
+
+		public Image getImage() {
+			return image;
 		}
 	}
 

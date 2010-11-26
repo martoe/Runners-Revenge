@@ -9,8 +9,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * Base class for MapTiles that use a local file cache
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class CachedMapTile implements MapTile {
 
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
+	protected final Log logger = LogFactory.getLog(getClass());
 	private final String cacheName;
 	private byte[] image;
 

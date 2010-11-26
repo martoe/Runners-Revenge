@@ -9,6 +9,6 @@ Require-Bundle: org.eclipse.ui,
  at.bxm.running.core;bundle-version="1.0.0",
  at.bxm.running.xml;bundle-version="1.0.0",
  at.bxm.running.maps;bundle-version="1.0.0",
- com.springsource.slf4j.api;bundle-version="1.6.1"
+ org.apache.commons.logging;bundle-version="1.1.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

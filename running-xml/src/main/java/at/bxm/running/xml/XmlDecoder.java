@@ -1,20 +1,20 @@
 package at.bxm.running.xml;
 
+import at.bxm.running.core.FitnessWorkbook;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Arrays;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import at.bxm.running.core.FitnessWorkbook;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 public class XmlDecoder {
 
 	private static final char[] XML_PREFIX = new char[] { 239, 187, 191 };
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	private final Log logger = LogFactory.getLog(getClass());
 
 	public void readPrefix(Reader in) throws IOException, XmlDecodingException {
 		char[] prefix = new char[3];
