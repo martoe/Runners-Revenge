@@ -1,7 +1,11 @@
 package at.bxm.running.xml;
 
-import at.bxm.running.core.FitnessWorkbook;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Arrays;
 import javax.xml.bind.JAXBContext;
@@ -9,19 +13,35 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import at.bxm.running.core.FitnessWorkbook;
 
 public class XmlDecoder {
 
-	private static final char[] XML_PREFIX = new char[] { 239, 187, 191 };
-
+	/** UTF-8 chars to eat up before the XML content starts */
+	private static final char[] XML_PREFIX = new char[] { 65279 };// { 239 , 187, 191 };
 	private final Log logger = LogFactory.getLog(getClass());
 
 	public void readPrefix(Reader in) throws IOException, XmlDecodingException {
-		char[] prefix = new char[3];
+		char[] prefix = new char[XML_PREFIX.length];
 		in.read(prefix);
 		if (!Arrays.equals(prefix, XML_PREFIX)) {
 			throw new XmlDecodingException(0, 0, "Invalid prefix characters");
 		}
+	}
+
+	/**
+	 * Since the file has a (binary) prefix before the XML content starts, it is not recognized as
+	 * UTF-8 file and must therefore be read as {@link InputStream}
+	 */
+	public FitnessWorkbook parseLogbook(File file) throws IOException, XmlDecodingException {
+		BufferedReader in = null;
+		try {
+			in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+			return new XmlDecoder().parseLogbook(in);
+		} finally {
+			in.close();
+		}
+
 	}
 
 	public FitnessWorkbook parseLogbook(Reader in) throws IOException, XmlDecodingException {

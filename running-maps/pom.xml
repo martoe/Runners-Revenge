@@ -7,8 +7,8 @@
     <groupId>at.bxm.running</groupId>
     <version>1.0.0</version>
   </parent>
-  <artifactId>running-xml</artifactId>
-  <name>running-xml</name>
+  <artifactId>running-maps</artifactId>
+  <name>running-maps</name>
   <dependencies>
   </dependencies>
 </project>

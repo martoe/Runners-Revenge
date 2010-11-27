@@ -1,12 +1,11 @@
 package at.bxm.running.ui;
 
+import java.io.File;
+import java.io.IOException;
+import org.eclipse.core.commands.common.EventManager;
 import at.bxm.running.core.FitnessWorkbook;
 import at.bxm.running.xml.XmlDecoder;
 import at.bxm.running.xml.XmlDecodingException;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import org.eclipse.core.commands.common.EventManager;
 
 public class ActiveWorkbook extends EventManager {
 	private static final ActiveWorkbook INSTANCE = new ActiveWorkbook();
@@ -20,16 +19,8 @@ public class ActiveWorkbook extends EventManager {
 			close();
 		}
 		this.file = file;
-		FileReader in = null;
-		try {
-			in = new FileReader(file);
-			data = new XmlDecoder().parseLogbook(in);
-			fireHandlerChanged();
-		} finally {
-			try {
-				in.close();
-			} catch (Exception ignore) {}
-		}
+		data = new XmlDecoder().parseLogbook(file);
+		fireHandlerChanged();
 	}
 
 	public static ActiveWorkbook getInstance() {

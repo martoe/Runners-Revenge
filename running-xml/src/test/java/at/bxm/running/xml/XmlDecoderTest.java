@@ -2,6 +2,7 @@ package at.bxm.running.xml;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import org.testng.annotations.Test;
 
 @Test
@@ -13,9 +14,9 @@ public class XmlDecoderTest {
 		in.close();
 	}
 
-	private BufferedReader read(String resource) {
+	private BufferedReader read(String resource) throws UnsupportedEncodingException {
 		return new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader()
-						.getResourceAsStream(resource)));
+						.getResourceAsStream(resource), "UTF-8"));
 	}
 
 }

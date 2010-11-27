@@ -4,7 +4,14 @@ import static org.testng.Assert.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import org.testng.annotations.Test;
+import at.bxm.running.core.Activity;
+import at.bxm.running.core.Athlete;
+import at.bxm.running.core.FitnessWorkbook;
+import at.bxm.running.core.Track;
+import at.bxm.running.core.TrackPoint;
 
 @Test
 public class JaxbTest {
@@ -15,7 +22,11 @@ public class JaxbTest {
 		check(fitlog.getAthleteLogs().get(0).getAthlete());
 		assertEquals(fitlog.getAthleteLogs().get(0).getHistories().size(), 0);
 		assertEquals(fitlog.getAthleteLogs().get(0).getActivities().size(), 1);
-		check(fitlog.getAthleteLogs().get(0).getActivities().get(0).getTrack(), 126);
+		Activity activity = fitlog.getAthleteLogs().get(0).getActivities().get(0);
+		assertEquals(activity.getLocation(), "Vösendorf");
+		assertEquals(new SimpleDateFormat("dd.MM.yyyy HH:mm").format(activity.getStartTime()),
+						"29.08.2008 17:29");
+		check(activity.getTrack(), 126);
 	}
 
 	public void parseBigLogbook() throws Exception {
@@ -53,9 +64,9 @@ public class JaxbTest {
 		}
 	}
 
-	private BufferedReader read(String resource) {
+	private BufferedReader read(String resource) throws UnsupportedEncodingException {
 		return new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader()
-						.getResourceAsStream(resource)));
+						.getResourceAsStream(resource), "UTF-8"));
 	}
 
 }

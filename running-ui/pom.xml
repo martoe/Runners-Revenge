@@ -5,10 +5,10 @@
   <parent>
     <artifactId>running-root</artifactId>
     <groupId>at.bxm.running</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
   </parent>
-  <artifactId>running-gui</artifactId>
-  <name>running-gui</name>
+  <artifactId>running-ui</artifactId>
+  <name>running-ui</name>
   <!--packaging>eclipse-plugin</packaging-->
   <dependencies>
   </dependencies>

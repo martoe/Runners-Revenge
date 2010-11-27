@@ -21,6 +21,8 @@ public class Activity extends FitlogNode {
 	/** <xs:element ref="Weather" minOccurs="0" maxOccurs="1"/> */
 	/** <xs:element ref="Category" minOccurs="0" maxOccurs="1"/> */
 	/** <xs:element ref="Location" minOccurs="0" maxOccurs="1"/> */
+	@XmlElement(name = "Location", namespace = FitlogNode.NAMESPACE)
+	private Location location;
 	/** <xs:element ref="Route" minOccurs="0" maxOccurs="1"/> */
 	/** <xs:element ref="EquipmentUsed" minOccurs="0" maxOccurs="1"/> */
 	/** <xs:element ref="Track" minOccurs="0" maxOccurs="1"/> */
@@ -47,4 +49,15 @@ public class Activity extends FitlogNode {
 		return id;
 	}
 
+	public String getLocation() {
+		return location == null ? null : location.name;
+	}
+
+	// TODO can we do this without an additional class?
+	private static class Location {
+		/** <xs:attribute name="Id" type="xs:string" use="optional"/> */
+		/** <xs:attribute name="Name" type="xs:string" use="optional"/> */
+		@XmlAttribute(name = "Name")
+		private String name;
+	}
 }
