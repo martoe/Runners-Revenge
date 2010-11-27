@@ -32,6 +32,7 @@ public class ActivitiesView extends ViewPart {
 		// Platform.getAdapterManager().registerAdapters(adapterFactory, Contact.class);
 		// getSite().setSelectionProvider(treeViewer);
 		tableViewer.setLabelProvider(new LabelProvider());
+		// FIXME tableViewer.setComparator(new ViewerComparator());
 		createTableColumn(tableViewer, "Date", 80, new ActivityCellLabelProvider() {
 			private final DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -89,7 +90,6 @@ public class ActivitiesView extends ViewPart {
 		viewerNameColumn.getColumn().setResizable(true);
 		viewerNameColumn.getColumn().setMoveable(true);
 		viewerNameColumn.setLabelProvider(provider);
-		// TODO tableViewer.setComparator(ViewerComparator comparator)
 	}
 
 	private static abstract class ActivityCellLabelProvider extends CellLabelProvider {

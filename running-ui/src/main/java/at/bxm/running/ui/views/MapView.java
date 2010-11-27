@@ -1,13 +1,5 @@
 package at.bxm.running.ui.views;
 
-import at.bxm.running.core.Activity;
-import at.bxm.running.maps.MapLayout;
-import at.bxm.running.maps.MapProvider;
-import at.bxm.running.maps.MapService;
-import at.bxm.running.maps.MapTile;
-import at.bxm.running.maps.TrackImage;
-import at.bxm.running.maps.TrackImage.TrackCanvas;
-import at.bxm.running.maps.providers.GoogleMapsSatellite;
 import java.io.IOException;
 import java.io.InputStream;
 import org.apache.commons.logging.Log;
@@ -25,6 +17,13 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
+import at.bxm.running.core.Activity;
+import at.bxm.running.maps.MapLayout;
+import at.bxm.running.maps.MapProvider;
+import at.bxm.running.maps.MapTile;
+import at.bxm.running.maps.TrackImage;
+import at.bxm.running.maps.TrackImage.TrackCanvas;
+import at.bxm.running.maps.providers.GoogleMapsSatellite;
 
 public class MapView extends ViewPart implements ISelectionListener {
 	private final Log logger = LogFactory.getLog(MapView.class);
@@ -44,13 +43,7 @@ public class MapView extends ViewPart implements ISelectionListener {
 					if (trackCanvas == null) {
 						logger.debug("Drawing " + selectedActivity + "...");
 						TrackImage track = new TrackImage(selectedActivity.getTrack());
-						MapService mapService = new MapService();
-						mapService.setMapProvider(mapProvider);
-						try {
-							trackCanvas = createImage(e.gc.getDevice(), track, 17);
-						} catch (IOException ex) {
-							logger.warn("Could not create image for " + track, ex);
-						}
+						trackCanvas = createImage(e.gc.getDevice(), track, 15);
 					}
 					e.gc.drawImage(trackCanvas.getImage(), 0, 0);
 				}
@@ -65,7 +58,7 @@ public class MapView extends ViewPart implements ISelectionListener {
 	public void selectionChanged(IWorkbenchPart part, ISelection selection) {
 		if (selection instanceof IStructuredSelection) {
 			Object selectedElement = ((IStructuredSelection)selection).getFirstElement();
-			if (selectedElement instanceof Activity) {
+			if (selectedElement instanceof Activity && !selectedElement.equals(selectedActivity)) {
 				selectedActivity = (Activity)selectedElement;
 				trackCanvas = null;
 				canvas.redraw();
@@ -74,8 +67,7 @@ public class MapView extends ViewPart implements ISelectionListener {
 	}
 
 	// TODO copied from MapService
-	private SwtTrackCanvas createImage(Device device, TrackImage data, double resolution)
-					throws IOException {
+	private SwtTrackCanvas createImage(Device device, TrackImage data, double resolution) {
 		MapLayout<?> layout = mapProvider.getLayout(data.getLatitudeMax(), data.getLatitudeMin(),
 						data.getLongitudeMax(), data.getLongitudeMin(), resolution);
 		int width = layout.getTileWidth() * layout.getTileColumns();
@@ -90,14 +82,18 @@ public class MapView extends ViewPart implements ISelectionListener {
 			int colHeight = 0;
 			for (int col = 0; col < layout.getTileColumns(); col++) {
 				MapTile tile = layout.getTile(row, col);
-				InputStream in = tile.getImageStream();
-				Image img = new Image(device, in);
-				if (logger.isTraceEnabled()) {
-					logger.trace("Placing image " + row + "/" + col + " at " + x + "/" + y);
+				try {
+					InputStream in = tile.getImageStream();
+					Image img = new Image(device, in);
+					if (logger.isTraceEnabled()) {
+						logger.trace("Placing image " + row + "/" + col + " at " + x + "/" + y);
+					}
+					gr.drawImage(img, x, y);
+					x += img.getBounds().width;
+					colHeight = img.getBounds().height;
+				} catch (IOException e) {
+					logger.warn("Could not load image for " + tile, e);
 				}
-				gr.drawImage(img, x, y);
-				x += img.getBounds().width;
-				colHeight = img.getBounds().height;
 			}
 			y += colHeight;
 		}

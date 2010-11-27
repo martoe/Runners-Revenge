@@ -37,6 +37,9 @@ public abstract class CachedMapTile implements MapTile {
 				writeToCache();
 			}
 		}
+		if (image.length == 0) {
+			throw new IOException("Invalid image: " + cacheName);
+		}
 		return image;
 	}
 
