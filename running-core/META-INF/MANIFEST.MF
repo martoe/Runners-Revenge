@@ -4,5 +4,6 @@ Bundle-Name: Running-Core
 Bundle-SymbolicName: at.bxm.running.core
 Bundle-Version: 1.0.0
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.apache.commons.lang;bundle-version="2.3.0"
+Require-Bundle: org.apache.commons.lang;bundle-version="2.3.0";visibility:=reexport,
+ com.springsource.org.apache.log4j;bundle-version="1.2.0";visibility:=reexport
 Export-Package: at.bxm.running.core

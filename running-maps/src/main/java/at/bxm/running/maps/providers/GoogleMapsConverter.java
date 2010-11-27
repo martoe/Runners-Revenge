@@ -1,11 +1,10 @@
 package at.bxm.running.maps.providers;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 public final class GoogleMapsConverter {
 	private static final double LATITUDE_MAX = 85.0511287798066;
-	private static final Log logger = LogFactory.getLog(GoogleMapsConverter.class);
+	private static final Logger logger = Logger.getLogger(GoogleMapsConverter.class);
 
 	private GoogleMapsConverter() {
 		// must not be instatiated

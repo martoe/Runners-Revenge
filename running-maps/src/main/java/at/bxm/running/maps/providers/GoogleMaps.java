@@ -9,13 +9,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.log4j.Logger;
 
 public abstract class GoogleMaps implements MapProvider {
 
@@ -48,7 +47,7 @@ public abstract class GoogleMaps implements MapProvider {
 	abstract int getMaxZoomLevel();
 
 	private class GoogleMapTile extends CachedMapTile {
-		private final Log logger = LogFactory.getLog(getClass());
+		private final Logger logger = Logger.getLogger(getClass());
 		private final int zoom;
 		private final int x;
 		private final int y;

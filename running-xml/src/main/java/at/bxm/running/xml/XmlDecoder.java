@@ -1,5 +1,6 @@
 package at.bxm.running.xml;
 
+import at.bxm.running.core.FitnessWorkbook;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,15 +12,13 @@ import java.util.Arrays;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import at.bxm.running.core.FitnessWorkbook;
+import org.apache.log4j.Logger;
 
 public class XmlDecoder {
 
 	/** UTF-8 chars to eat up before the XML content starts */
 	private static final char[] XML_PREFIX = new char[] { 65279 };// { 239 , 187, 191 };
-	private final Log logger = LogFactory.getLog(getClass());
+	private final Logger logger = Logger.getLogger(getClass());
 
 	public void readPrefix(Reader in) throws IOException, XmlDecodingException {
 		char[] prefix = new char[XML_PREFIX.length];

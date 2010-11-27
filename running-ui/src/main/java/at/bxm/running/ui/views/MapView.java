@@ -9,8 +9,7 @@ import at.bxm.running.maps.TrackImage.TrackCanvas;
 import at.bxm.running.maps.providers.GoogleMapsSatellite;
 import java.io.IOException;
 import java.io.InputStream;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
@@ -27,7 +26,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
 
 public class MapView extends ViewPart implements ISelectionListener {
-	private final Log logger = LogFactory.getLog(MapView.class);
+	private final Logger logger = Logger.getLogger(getClass());
 	private Canvas canvas;
 	private final MapProvider mapProvider = new GoogleMapsSatellite();
 	private Activity selectedActivity;
@@ -35,14 +34,14 @@ public class MapView extends ViewPart implements ISelectionListener {
 
 	@Override
 	public void createPartControl(Composite parent) {
-		canvas = new Canvas(parent, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		canvas = new Canvas(parent, SWT.BORDER);
 		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(this);
 		canvas.addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
 				if (selectedActivity != null) {
 					if (trackCanvas == null) {
-						logger.debug("Drawing " + selectedActivity + "...");
+						logger.debug("Drawing activity " + selectedActivity.getId() + "...");
 						TrackImage track = new TrackImage(selectedActivity.getTrack());
 						trackCanvas = createImage(e.gc.getDevice(), track, 13);
 					}

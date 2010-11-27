@@ -3,12 +3,11 @@ package at.bxm.running.graph;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 public abstract class TestBase {
 
-	protected final Log logger = LogFactory.getLog(getClass());
+	protected final Logger logger = Logger.getLogger(getClass());
 
 	protected final BufferedReader read(String resource) {
 		return new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader()

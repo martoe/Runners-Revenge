@@ -8,13 +8,12 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 // TODO wiring stuff
 public class MapService {
 
-	private final Log logger = LogFactory.getLog(getClass());
+	private final Logger logger = Logger.getLogger(getClass());
 	private MapProvider mapProvider;
 
 	public void setMapProvider(MapProvider value) {

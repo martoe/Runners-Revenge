@@ -3,8 +3,6 @@ package at.bxm.running.ui;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -17,10 +15,7 @@ public class Activator extends AbstractUIPlugin {
 
 	public static final String PLUGIN_ID = "at.bxm.running.gui";
 	private static Activator plugin;
-	private final Log logger = LogFactory.getLog(getClass());
-	static {
-		Logger.getRootLogger(); // FIXME forces load of the log4j bundle, but for JCL it is too late...
-	}
+	private final Logger logger = Logger.getLogger(getClass());
 
 	@Override
 	public void start(BundleContext context) throws Exception {
@@ -64,6 +59,7 @@ public class Activator extends AbstractUIPlugin {
 				Properties props = new Properties();
 				props.load(in);
 				System.getProperties().putAll(props);
+				logger.debug(props.size() + " properties loaded");
 			} finally {
 				try {
 					in.close();

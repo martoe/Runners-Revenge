@@ -9,8 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 /**
  * Base class for MapTiles that use a local file cache
@@ -19,7 +18,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public abstract class CachedMapTile implements MapTile {
 
-	protected final Log logger = LogFactory.getLog(getClass());
+	protected final Logger logger = Logger.getLogger(getClass());
 	private static final String PROP_CACHEDIR = "at.bxm.running.maps.cachedir";
 	private final String cacheName;
 	private byte[] image;
