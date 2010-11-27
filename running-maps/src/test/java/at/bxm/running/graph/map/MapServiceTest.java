@@ -1,9 +1,13 @@
 package at.bxm.running.graph.map;
 
+import at.bxm.running.core.FitnessWorkbook;
 import at.bxm.running.graph.TestBase;
-import at.bxm.running.graph.TrackImage;
-import at.bxm.running.graph.map.providers.GoogleMapsSatellite;
-import at.bxm.running.xml.FitnessWorkbook;
+import at.bxm.running.maps.MapLayout;
+import at.bxm.running.maps.MapProvider;
+import at.bxm.running.maps.MapService;
+import at.bxm.running.maps.MapTile;
+import at.bxm.running.maps.TrackImage;
+import at.bxm.running.maps.providers.GoogleMapsSatellite;
 import at.bxm.running.xml.XmlDecoder;
 import at.bxm.running.xml.XmlDecodingException;
 import java.awt.Graphics;

@@ -71,16 +71,24 @@ public abstract class GoogleMaps implements MapProvider {
 			HttpResponse response = httpclient.execute(req);
 			if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK) {
 				logger.warn("Request to " + req.getURI() + " returned " + response.getStatusLine());
+				req.abort();
 				return new byte[0];
 			}
-			InputStream in = response.getEntity().getContent();
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			final byte[] buffer = new byte[1000];
 			int read;
-			while ((read = in.read(buffer)) > 0) {
-				out.write(buffer, 0, read);
+			InputStream in = null;
+			try {
+				in = response.getEntity().getContent();
+				while ((read = in.read(buffer)) > 0) {
+					out.write(buffer, 0, read);
+				}
+			} finally {
+				try {
+					in.close();
+				} catch (Exception ignore) {}
 			}
-			response.getEntity().consumeContent();
+			//response.getEntity().consumeContent();
 			return out.toByteArray();
 		}
 

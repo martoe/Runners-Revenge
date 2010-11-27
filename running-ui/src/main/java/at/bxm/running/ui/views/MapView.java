@@ -1,5 +1,12 @@
 package at.bxm.running.ui.views;
 
+import at.bxm.running.core.Activity;
+import at.bxm.running.maps.MapLayout;
+import at.bxm.running.maps.MapProvider;
+import at.bxm.running.maps.MapTile;
+import at.bxm.running.maps.TrackImage;
+import at.bxm.running.maps.TrackImage.TrackCanvas;
+import at.bxm.running.maps.providers.GoogleMapsSatellite;
 import java.io.IOException;
 import java.io.InputStream;
 import org.apache.commons.logging.Log;
@@ -9,6 +16,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -17,13 +25,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
-import at.bxm.running.core.Activity;
-import at.bxm.running.maps.MapLayout;
-import at.bxm.running.maps.MapProvider;
-import at.bxm.running.maps.MapTile;
-import at.bxm.running.maps.TrackImage;
-import at.bxm.running.maps.TrackImage.TrackCanvas;
-import at.bxm.running.maps.providers.GoogleMapsSatellite;
 
 public class MapView extends ViewPart implements ISelectionListener {
 	private final Log logger = LogFactory.getLog(MapView.class);
@@ -43,7 +44,7 @@ public class MapView extends ViewPart implements ISelectionListener {
 					if (trackCanvas == null) {
 						logger.debug("Drawing " + selectedActivity + "...");
 						TrackImage track = new TrackImage(selectedActivity.getTrack());
-						trackCanvas = createImage(e.gc.getDevice(), track, 15);
+						trackCanvas = createImage(e.gc.getDevice(), track, 13);
 					}
 					e.gc.drawImage(trackCanvas.getImage(), 0, 0);
 				}
@@ -75,11 +76,10 @@ public class MapView extends ViewPart implements ISelectionListener {
 		logger.debug("Creating " + width + "*" + height + " image for " + layout);
 		Image image = new Image(device, width, height);
 		GC gr = new GC(image);
-
+		gr.setForeground(new Color(device, 0, 0, 255));
 		int y = 0;
 		for (int row = 0; row < layout.getTileRows(); row++) {
 			int x = 0;
-			int colHeight = 0;
 			for (int col = 0; col < layout.getTileColumns(); col++) {
 				MapTile tile = layout.getTile(row, col);
 				try {
@@ -89,13 +89,12 @@ public class MapView extends ViewPart implements ISelectionListener {
 						logger.trace("Placing image " + row + "/" + col + " at " + x + "/" + y);
 					}
 					gr.drawImage(img, x, y);
-					x += img.getBounds().width;
-					colHeight = img.getBounds().height;
 				} catch (IOException e) {
 					logger.warn("Could not load image for " + tile, e);
 				}
+				x += layout.getTileWidth();
 			}
-			y += colHeight;
+			y += layout.getTileHeight();
 		}
 		SwtTrackCanvas c = new SwtTrackCanvas(image, gr);
 		data.draw(c, layout.getLatNorth(), layout.getLatSouth(), layout.getLonEast(),

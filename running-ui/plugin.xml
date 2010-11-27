@@ -14,7 +14,7 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            name="RCP Perspective"
+            name="RunningPerspective"
             class="at.bxm.running.ui.Perspective"
             id="at.bxm.running.gui.perspective">
       </perspective>
@@ -71,11 +71,14 @@
       <perspectiveExtension
             targetID="*">
          <view
+               closeable="false"
                id="at.bxm.running.gui.views.activitiesView"
                minimized="false"
                ratio="1.0f"
                relationship="top"
-               relative="org.eclipse.ui.editorss">
+               relative="org.eclipse.ui.editorss"
+               showTitle="false"
+               standalone="true">
          </view>
          <view
                id="at.bxm.running.gui.views.mapView"

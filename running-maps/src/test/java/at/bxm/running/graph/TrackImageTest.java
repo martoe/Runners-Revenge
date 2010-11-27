@@ -1,5 +1,9 @@
 package at.bxm.running.graph;
 
+import at.bxm.running.core.FitnessWorkbook;
+import at.bxm.running.maps.TrackImage;
+import at.bxm.running.maps.TrackImage.BufferedImageCanvas;
+import at.bxm.running.xml.XmlDecoder;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
@@ -8,8 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import org.testng.annotations.Test;
-import at.bxm.running.xml.FitnessWorkbook;
-import at.bxm.running.xml.XmlDecoder;
 
 // TODO base class for all tests ("test-utility" project?)
 @Test
@@ -20,8 +22,8 @@ public class TrackImageTest extends TestBase {
 		GraphicsConfiguration gfxConf = GraphicsEnvironment.getLocalGraphicsEnvironment()
 						.getDefaultScreenDevice().getDefaultConfiguration();
 		BufferedImage image = gfxConf.createCompatibleImage(width, height);
-		data.draw(image, data.getLatitudeMax(), data.getLatitudeMin(), data.getLongitudeMax(),
-						data.getLongitudeMin());
+		data.draw(new BufferedImageCanvas(image), data.getLatitudeMax(), data.getLatitudeMin(),
+						data.getLongitudeMax(), data.getLongitudeMin());
 		File target = getTestfile(filename);
 		ImageIO.write(image, imageType, target);
 	}

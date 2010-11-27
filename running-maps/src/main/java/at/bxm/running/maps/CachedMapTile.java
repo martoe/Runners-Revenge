@@ -20,6 +20,7 @@ import org.apache.commons.logging.LogFactory;
 public abstract class CachedMapTile implements MapTile {
 
 	protected final Log logger = LogFactory.getLog(getClass());
+	private static final String PROP_CACHEDIR = "at.bxm.running.maps.cachedir";
 	private final String cacheName;
 	private byte[] image;
 
@@ -93,7 +94,11 @@ public abstract class CachedMapTile implements MapTile {
 
 	// TODO better use a local var
 	private File getCacheDir() throws IOException {
-		File cacheDir = new File("cache/" + cacheName);
+		String dir = System.getProperty(PROP_CACHEDIR);
+		if (dir == null) {
+			dir = System.getProperty("user.home") + "/.running/cache";
+		}
+		File cacheDir = new File(dir + "/" + cacheName);
 		cacheDir.mkdirs();
 		if (!cacheDir.exists()) {
 			throw new IOException("Cache directory doesn't exist: " + cacheDir.getAbsolutePath());

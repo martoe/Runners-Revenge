@@ -1,11 +1,12 @@
 package at.bxm.running.graph.map.providers;
 
 import static org.testng.Assert.*;
+import at.bxm.running.core.FitnessWorkbook;
 import at.bxm.running.graph.TestBase;
-import at.bxm.running.graph.TrackImage;
-import at.bxm.running.graph.map.MapLayout;
-import at.bxm.running.graph.map.MapProvider;
-import at.bxm.running.xml.FitnessWorkbook;
+import at.bxm.running.maps.MapLayout;
+import at.bxm.running.maps.MapProvider;
+import at.bxm.running.maps.TrackImage;
+import at.bxm.running.maps.providers.GoogleMapsStreet;
 import at.bxm.running.xml.XmlDecoder;
 import at.bxm.running.xml.XmlDecodingException;
 import java.io.BufferedReader;

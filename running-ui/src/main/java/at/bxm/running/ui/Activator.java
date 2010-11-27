@@ -1,5 +1,11 @@
 package at.bxm.running.ui;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -9,21 +15,18 @@ import org.osgi.framework.BundleContext;
  */
 public class Activator extends AbstractUIPlugin {
 
-	// The plug-in ID
-	public static final String PLUGIN_ID = "at.bxm.running.gui"; //$NON-NLS-1$
-
-	// The shared instance
+	public static final String PLUGIN_ID = "at.bxm.running.gui";
 	private static Activator plugin;
-
-	/**
-	 * The constructor
-	 */
-	public Activator() {}
+	private final Log logger = LogFactory.getLog(getClass());
+	static {
+		Logger.getRootLogger(); // FIXME forces load of the log4j bundle, but for JCL it is too late...
+	}
 
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		loadProperties();
 	}
 
 	@Override
@@ -49,5 +52,23 @@ public class Activator extends AbstractUIPlugin {
 	 */
 	public static ImageDescriptor getImageDescriptor(String path) {
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
+	}
+
+	private void loadProperties() throws IOException {
+		InputStream in = Thread.currentThread().getContextClassLoader()
+						.getResourceAsStream("running.properties");
+		if (in == null) {
+			logger.warn("running.properties not found");
+		} else {
+			try {
+				Properties props = new Properties();
+				props.load(in);
+				System.getProperties().putAll(props);
+			} finally {
+				try {
+					in.close();
+				} catch (Exception ignore) {}
+			}
+		}
 	}
 }
