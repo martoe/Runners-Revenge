@@ -1,5 +1,7 @@
 package at.bxm.running.graph;
 
+import at.bxm.running.core.FitnessWorkbook;
+import at.bxm.running.xml.XmlDecoder;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
@@ -8,8 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import org.testng.annotations.Test;
-import at.bxm.running.xml.FitnessWorkbook;
-import at.bxm.running.xml.XmlDecoder;
 
 // TODO base class for all tests ("test-utility" project?)
 @Test

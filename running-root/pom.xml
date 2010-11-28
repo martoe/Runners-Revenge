@@ -36,6 +36,11 @@
 			</dependency>
 			<dependency>
 				<groupId>at.bxm.running</groupId>
+				<artifactId>running-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>at.bxm.running</groupId>
 				<artifactId>running-xml</artifactId>
 				<version>${project.version}</version>
 			</dependency>
